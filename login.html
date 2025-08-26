@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Jobberman</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+      <header class="header">
+        <div class="container">
+           
+                <a href="index.html">
+                    <img src="logo-removebg-preview.png" alt="Jobberman Logo" width="300px" height="100" style="filter: none;">
+            
+             
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Find Jobs</a></li>
+                    <li><a href="Available Jobs.html">Available Jobs</a></li>
+                    <li><a href="#">Membership</a></li>
+                    <li class="dropdown">
+                        <a href="#">More <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="#">FAQs</a>
+                            <a href="about us.html">About us</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="post-job.html" class="btn btn-post-job">Post a Job</a>
+                <a href="login.html" class="btn btn-login">Log In</a>
+                <a href="create-account.html" class="btn btn-primary">Sign Up</a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <!-- Mobile Toggle -->
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            
+   
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-header">
+            <!-- <img src="logo-removebg-preview.png" alt="smartemployment" height="50" width="100"> -->
+            <button class="close-menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-auth">
+            <a href="login.html" class="btn btn-login">Log In</a>
+            <a href="create-account.html" class="btn btn-signup">Sign Up</a>
+            <a href="post-job.html" class="btn btn-post">Post a Job</a>
+        </div>
+        
+        <ul class="mobile-links">
+            <li>
+                <a href="index.html" class="section-title">Find a Job</a>
+            </li>
+            <li>
+                <a href="Available Jobs.html" class="section-title">Available Jobs</a>
+             
+            </li>
+            <li>
+                <a href="#" class="section-title">Membership</a>
+                
+            </li>
+          
+            <li>
+                <a href="#" class="section-title">Help Center</a>
+                <ul class="mobile-sublinks">
+                    <li><a href="#">Frequently Asked Questions</a></li>
+                    <li><a href="about us.html">About us</a></li>
+                    
+                </ul>
+            </li>
+        </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Form Section -->
+    <section class="login-form">
+        <div class="container">
+            <div class="form-container">
+                <h1>Welcome Back</h1>
+                <p>Log in to your Jobberman account</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address *</label>
+                        <input type="email" id="loginEmail" name="loginEmail" required placeholder="Your email address">
+                    </div>
+                    
+                    <div class="form-group password-group">
+                        <label for="loginPassword">Password *</label>
+                        <div class="password-input">
+                            <input type="password" id="loginPassword" name="loginPassword" required placeholder="Enter your password">
+                            <button type="button" class="toggle-password" aria-label="Show password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="forgot-password">
+                            <a href="forgot-password.html">Forgot password?</a>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group remember-me">
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-label">Remember me</span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-submit">
+                        <button type="submit" class="btn btn-primary btn-large">Log In</button>
+                    </div>
+                    
+                    <div class="social-login">
+                        <p>Or log in with:</p>
+                        <div class="social-buttons">
+                            <a href="#" class="btn btn-google">
+                                <i class="fab fa-google"></i> Google
+                            </a>
+                            <a href="#" class="btn btn-linkedin">
+                                <i class="fab fa-linkedin-in"></i> LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="no-account">
+                        <p>Don't have an account? <a href="create-account.html">Sign up</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="footer">
+        <!-- Footer content from index.html -->
+    </footer>
+ <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const closeMenu = document.querySelector('.close-menu');
+            const overlay = document.querySelector('.overlay');
+            
+            // Open mobile menu
+            mobileToggle.addEventListener('click', function() {
+                mobileNav.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Close mobile menu
+            function closeMobileMenu() {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            closeMenu.addEventListener('click', closeMobileMenu);
+            overlay.addEventListener('click', closeMobileMenu);
+            
+            // Close menu when clicking on links
+            const mobileLinks = document.querySelectorAll('.mobile-links a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-column">
+                    <h4>For Job Seekers</h4>
+                    <ul>
+                        <li><a href="#">Browse Jobs</a></li>
+                        <li><a href="#">Job Alerts</a></li>
+                        <li><a href="#">Career Resources</a></li>
+                        <li><a href="#">Salary Tool</a></li>
+                        <li><a href="#">Upload CV</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>For Employers</h4>
+                    <ul>
+                        <li><a href="post-job.html">Post a Job</a></li>
+                        <li><a href="#">Browse CVs</a></li>
+                        <li><a href="#">Recruitment Solutions</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Employer Resources</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Help center</h4>
+                    <ul>
+                        <li><a href="about us.html">About Us</a></li>
+                        <li><a href="#">Frequently asked Questions</a></li>
+                        
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    
+                    <div class="newsletter">
+                        <h4>Subscribe to Newsletter</h4>
+                        <form>
+                            <input type="email" placeholder="Your email address">
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-logo">
+                    <img src="logo-removebg-preview.png" alt="smartemployment logo">
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2025 Smart Employment Service. All rights reserved.</p>
+                </div>
+                <div class="country-selector">
+                    <select>
+                        <option value="Mogadisho">Mogadisho</option>
+                        
+                    </select>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
