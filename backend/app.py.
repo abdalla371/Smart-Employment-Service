@@ -1,1 +1,50 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# Test route
+@app.route("/")
+def home():
+    return {"message": "Backend is running successfully!"}
+
+# Signup route
+@app.route("/signup", methods=["POST"])
+def signup():
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+
+    # Halkan waxaa lagu dari karaa database kaydinta
+    return {"message": f"User {username} signed up successfully!"}
+
+# Login route
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+
+    # Halkan waxaad ku sameyn kartaa check database
+    return {"message": f"User {username} logged in successfully!"}
+
+# Post Job route
+@app.route("/jobs", methods=["POST"])
+def post_job():
+    data = request.json
+    job_title = data.get("title")
+    company = data.get("company")
+    return {"message": f"Job '{job_title}' at {company} posted successfully!"}
+
+# List Jobs route
+@app.route("/jobs", methods=["GET"])
+def list_jobs():
+    # Sample jobs (must be replaced with DB)
+    jobs = [
+        {"title": "Software Engineer", "company": "Google"},
+        {"title": "Web Developer", "company": "Microsoft"}
+    ]
+    return jsonify(jobs)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
 
