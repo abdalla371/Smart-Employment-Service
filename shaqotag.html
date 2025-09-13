@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship</title>
+  <style>
+    /* body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #333;
+    }  */
+
+    /* Hero / Banner */
+    .hero {
+      background: url(Guildhawk\ data\ analytics.webp) no-repeat center center/cover;
+      /* height: 250px; */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 50px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .breadcrumb {
+      font-size: 30px;
+    }
+
+    .breadcrumb a {
+      color: #fff;
+      text-decoration: none;
+      opacity: 0.9;
+    }
+
+    .breadcrumb span {
+      color: #fff;
+      margin: 0 5px;
+    }
+
+    /* Features section */
+    .features {
+      padding: 60px 10%;
+      text-align: center;
+    }
+
+    .features h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .features p {
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-box {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 30px 20px;
+      transition: 0.3s ease;
+    }
+
+    .feature-box:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: #3366cc;
+    }
+
+    .feature-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.5;
+    }
+    .cta-button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 25px;
+      background: #3366cc;
+      color: #fff;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .cta-button:hover {
+      background: #224499;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 28px;
+      }
+      .features h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<header class="header">
+        <div class="container">
+           
+                <a href="index.html">
+                    <img src="logo-removebg-preview.png" alt="Jobberman Logo" width="300px" height="100" style="filter: none;">
+            
+             
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Posts</a></li>
+                    <li><a href="membership.html">Membership</a></li>
+                    <li class="dropdown">
+                        <a href="#">More <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="#">FAQs</a>
+                            <a href="about us.html">About us</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="post-job.html" class="btn btn-post-job">Post a Job</a>
+                <a href="login.html" class="btn btn-login">Log In</a>
+                <a href="create-account.html" class="btn btn-primary">Sign Up</a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <!-- Mobile Toggle -->
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            
+   
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-header">
+            <!-- <img src="logo-removebg-preview.png" alt="smartemployment" height="50" width="100"> -->
+            <button class="close-menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-auth">
+            <a href="login.html" class="btn btn-login">Log In</a>
+            <a href="create-account.html" class="btn btn-signup">Sign Up</a>
+            <a href="post-job.html" class="btn btn-post">Post a Job</a>
+        </div>
+        
+        <ul class="mobile-links">
+            <li>
+                <a href="index.html" class="section-title">Find a Job</a>
+            </li>
+            <li>
+                <a href="Available Jobs.html" class="section-title">Available Jobs</a>
+             
+            </li>
+            <li>
+                <a href="membership.html" class="section-title">Membership</a>
+                
+            </li>
+          
+            <li>
+                <a href="#" class="section-title">Help Center</a>
+                <ul class="mobile-sublinks">
+                    <li><a href="#">Frequently Asked Questions</a></li>
+                    <li><a href="about us.html">About us</a></li>
+                    
+                </ul>
+            </li>
+        </ul>
+            </div>
+        </div>
+    </header>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Shaqotag-program</h1>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a> <span>></span> Shaqo-tag
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <h2>Shaqotag—Bilowga wadada guushaada</h2>
+    <p>
+      Sababta aad u codsaneyso Shaqotag_program-keena iyo faa'idooyinka aad heli doonto:
+    </p>
+    
+    <div class="features-grid">
+      <div class="feature-box">
+        <div class="feature-icon">💡</div>
+        <div class="feature-title">Hands-On Experience</div>
+        <div class="feature-desc">
+          Hel khibrad shaqo oo dhab ah iyo CV xooggan
+        </div>
+      </div>
+
+     
+      <div class="feature-box">
+        <div class="feature-icon">👩‍🏫</div>
+        <div class="feature-title">Training</div>
+        <div class="feature-desc">
+          Hel tababar deg=deg ah oo kuu diyaarinaya boos shaqo.
+        </div>
+      </div>
+ <div class="feature-box">
+        <div class="feature-icon">👀</div>
+        <div class="feature-title">Job Acquiring</div>
+        <div class="feature-desc">
+          Helitaanka Fursado shaqo oo qarsoon.
+        </div>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Discover perfect skills</div>
+        <div class="feature-desc">
+          Wax ka ogow xirfadaha suuqa shaqada looga baahanyahey.
+        </div>
+      </div>
+
+<div class="feature-box">
+        <div class="feature-icon">🤝</div>
+        <div class="feature-title">Meeting</div>
+        <div class="feature-desc">
+          La kulan Shaqo-bixiyeyaal ubaahan shaqaale cusub.
+        </div>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon">🚀</div>
+        <div class="feature-title">Building skills</div>
+        <div class="feature-desc">
+          Ku dhis xirfadaha si deg-deg ah oo aad shaqo ku heli karto.
+        </div>
+      </div>
+      
+      <div class="feature-box">
+        <div class="feature-icon">📝</div>
+        <div class="feature-title">CV and Interview</div>
+        <div class="feature-desc">
+          Baro sida CV iyo Interview loo isticmaalo si xirfad leh.
+        </div>
+      </div>
+     <div class="feature-box">
+        <div class="feature-icon">👨‍🏫</div>
+        <div class="feature-title">Consultant</div>
+        <div class="feature-desc">
+          La talin xirfadeed ee xeerarka suuqa shaqada.
+        </div>
+      </div>
+      
+      <div class="feature-box">
+        <div class="feature-icon">📝</div>
+        <div class="feature-title">Mentorship</div>
+        <div class="feature-desc">
+          Hel talo iyo mentoring inta aad ku jirto shaqada.
+        </div>
+      </div>
+      <div class="feature-box">
+        <div class="feature-icon">🙏</div>
+        <div class="feature-title">Learn ethic and respect</div>
+        <div class="feature-desc">
+          Wax ka baro Anshaxa iyo dhaqanka goobta shaqo.
+        </div>
+      </div>
+     
+
+    </div>
+     <a href="form shaqotag.html" class="cta-button">Apply for shaqo-tag</a>
+  </section>
+   <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-column">
+                    <h4>For Individuals</h4>
+                    <ul>
+                        <li><a href="shaqotag.html">Shaqotag-program</a></li>
+                        <li><a href="internship.html">Internship-program</a></li>
+                        <li><a href="membership.html">Membership-program</a></li>
+                        <li><a href="form internship.html">Apply Internship</a></li>
+                        <li><a href="form shaqotag.html">Apply Shaqotag</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>For Employers</h4>
+                    <ul>
+                        <li><a href="post-job.html">Post a Job</a></li>
+                        <li><a href="#">Create account</a></li>
+                       
+                    </ul>
+                </div>
+                
+                
+                <div class="footer-column">
+                    <h4>Help center</h4>
+                    <ul>
+                        <li><a href="about us.html">About Us</a></li>
+                        <li><a href="#">Frequently asked Questions</a></li>
+                        
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    
+                    <div class="newsletter">
+                        <h4>Subscribe to Newsletter</h4>
+                        <form>
+                            <input type="email" placeholder="Your email address">
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-logo">
+                    <img src="logo-removebg-preview.png" alt="smartemployment logo">
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2025 Smart Employment Service. All rights reserved.</p>
+                </div>
+                <div class="country-selector">
+                    <select>
+                        <option value="Mogadisho">Mogadisho</option>
+                        
+                    </select>
+                </div>
+            </div>
+        </div>
+    </footer>
+  <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const closeMenu = document.querySelector('.close-menu');
+            const overlay = document.querySelector('.overlay');
+            
+            // Open mobile menu
+            mobileToggle.addEventListener('click', function() {
+                mobileNav.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Close mobile menu
+            function closeMobileMenu() {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            closeMenu.addEventListener('click', closeMobileMenu);
+            overlay.addEventListener('click', closeMobileMenu);
+            
+            // Close menu when clicking on links
+            const mobileLinks = document.querySelectorAll('.mobile-links a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        });
+    </script>
+  <script src="script.js"></script>
+
+</body>
+</html>

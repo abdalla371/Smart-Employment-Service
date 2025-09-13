@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html lang="so">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SMART EMPLOYMENT SERVICE</title>
+
+<style>
+
+body {
+
+font-family: Arial, sans-serif;
+
+margin: 0;
+ padding: 0;
+  background-color: #f4f4f4; color: #333;} 
+
+
+
+section {
+
+padding: 2rem;
+
+background-color: white;
+
+margin: Irem auto;
+max-width: 1000px;
+margin-bottom: 20px;
+margin-left: auto;
+margin-right: auto;
+
+border-radius: 8px;
+
+box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+}
+
+footer {
+
+background-color: #222;
+
+color: white;
+
+text-align: center;
+
+padding: Irem;
+
+margin-top: 2rem;
+
+}
+
+</style>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+           
+                <a href="index.html">
+                    <img src="logo-removebg-preview.png" alt="Jobberman Logo" width="300px" height="100" style="filter: none;">
+            
+             
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Posts</a></li>
+                    <li><a href="#">Membership</a></li>
+                    <li class="dropdown">
+                        <a href="#">More <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="#">FAQs</a>
+                            <a href="about us.html">About us</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="post-job.html" class="btn btn-post-job">Post a Job</a>
+                <a href="login.html" class="btn btn-login">Log In</a>
+                <a href="create-account.html" class="btn btn-primary">Sign Up</a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <!-- Mobile Toggle -->
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            
+   
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-header">
+            <!-- <img src="logo-removebg-preview.png" alt="smartemployment" height="50" width="100"> -->
+            <button class="close-menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-auth">
+            <a href="login.html" class="btn btn-login">Log In</a>
+            <a href="create-account.html" class="btn btn-signup">Sign Up</a>
+            <a href="post-job.html" class="btn btn-post">Post a Job</a>
+        </div>
+        
+        <ul class="mobile-links">
+            <li>
+                <a href="index.html" class="section-title">Find a Job</a>
+            </li>
+            <li>
+                <a href="Available Jobs.html" class="section-title">Available Jobs</a>
+             
+            </li>
+            <li>
+                <a href="#" class="section-title">Membership</a>
+                
+            </li>
+          
+            <li>
+                <a href="#" class="section-title">Help Center</a>
+                <ul class="mobile-sublinks">
+                    <li><a href="#">Frequently Asked Questions</a></li>
+                    <li><a href="about us.html">About us</a></li>
+                    
+                </ul>
+            </li>
+        </ul>
+            </div>
+        </div>
+    </header>
+<div class="hero">
+
+<p>Fursado Shaqo & Internship oo Lagu Dhisayo Mustaqbalka</p>
+
+</div>
+
+<section id="services">
+
+<h2>Adeegyada Shirkadda</h2>
+
+<p>SMART EMPLOYMENT SERVICE waxa ay diiradda saartaa laba arrimood oo muhim ah:</p>
+
+<ul>
+
+<li><strong>Isku-xirka Shaqo-doonka iyo Shaqo-bixiyeyaasha:</strong> Waxaan ka caawinnaa dadka shaqo-
+
+doonka ah inay helaan shaqooyin haboon iyadoo lala kaashanayo shirkadaha u baahan shaqaale tayo leh. </li>
+
+<li><strong>Internship Programs:</strong> Waxaan ardayda dhammeeyay jaamacadda ama ku jira waxbarashada
+
+siinnaa fursado tababar (internship) ah si ay u horumariyaan xirfadooda una helaan waayo-aragnimo shaqo.</li>
+
+</ul>
+
+</section>
+
+<section id="internships">
+
+<h2>Internship Opportunities</h2>
+
+<p>Barnaamijkeenna internship-ku waxa uu diiradda saarayaa:</p>
+
+حلية
+
+<li>In la xoojiyo xirfadaha ardayda.</li>
+<li>In loo diyaariyo suuqa shaqada. </li>
+
+<li>In lagu xiro jaamacadaha, ardayda iyo shirkadaha. </li>
+
+<p>Haddii aad tahay arday ama shaqo-doon, la xiriir si aad u hesho fursad internship ah.</p>
+
+</section>
+
+<section id="contact">
+
+<h2>Nala Soo Xiriir</h2>
+
+<p>Si aad ula xiriirto SMART EMPLOYMENT SERVICE, fadlan istiemaal xogta hoose:</p>
+
+<p>
+
+Email: info@smartemployment.so<br>
+
+Tel: +252 61 0000000<br>
+
+Address: Muqdisho, Soomaaliya
+
+</p>
+
+</section>
+
+<footer>
+
+<p>&copy; 2025 SMART EMPLOYMENT SERVICE. Xuquuqda way Dhammaatay.</p>
+
+</footer>
+ <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const closeMenu = document.querySelector('.close-menu');
+            const overlay = document.querySelector('.overlay');
+            
+            // Open mobile menu
+            mobileToggle.addEventListener('click', function() {
+                mobileNav.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Close mobile menu
+            function closeMobileMenu() {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            closeMenu.addEventListener('click', closeMobileMenu);
+            overlay.addEventListener('click', closeMobileMenu);
+            
+            // Close menu when clicking on links
+            const mobileLinks = document.querySelectorAll('.mobile-links a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        });
+    </script>
+<script src="script.js"></script>
+<footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-column">
+                   <h4>For Individuals</h4>
+                    <ul>
+                        <li><a href="shaqotag.html">Shaqotag-program</a></li>
+                        <li><a href="internship.html">Internship-program</a></li>
+                        <li><a href="membership.html">Membership-program</a></li>
+                        <li><a href="form internship.html">Apply Internship</a></li>
+                        <li><a href="form shaqotag.html">Apply Shaqotag</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>For Employers</h4>
+                    <ul>
+                        <li><a href="post-job.html">Post a Job</a></li>
+                        <li><a href="#">Create account</a></li>
+                       
+                    </ul>
+                </div>
+                
+                
+                <div class="footer-column">
+                    <h4>Help center</h4>
+                    <ul>
+                        <li><a href="about us.html">About Us</a></li>
+                        <li><a href="#">Frequently asked Questions</a></li>
+                        
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    
+                    <div class="newsletter">
+                        <h4>Subscribe to Newsletter</h4>
+                        <form>
+                            <input type="email" placeholder="Your email address">
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-logo">
+                    <img src="logo-removebg-preview.png" alt="smartemployment logo">
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2025 Smart Employment Service. All rights reserved.</p>
+                </div>
+                <div class="country-selector">
+                    <select>
+                        <option value="Mogadisho">Mogadisho</option>
+                        
+                    </select>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
