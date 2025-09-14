@@ -357,6 +357,8 @@
 
     <script>
         // Tab switching functionality
+        document.getElementById("createAccountForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
         function switchTab(tabId) {
             // Deactivate all tabs and forms
             document.querySelectorAll('.tab').forEach(tab => {
@@ -399,6 +401,7 @@
 </body>
 
 </html>
+
 
 
 
