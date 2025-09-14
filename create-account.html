@@ -267,11 +267,10 @@
              </form>
             </div>
             
-            <!-- Employer Form (New) -->
-            <div class="form-section" id="employer-form">
+           <form class="form-section" id="createAccountForm">
                 <h2 class="form-title">Employer Registration</h2>
                 
-                <form id="createAccountForm" class="form-grid"  >
+                <div class="form-grid">
                     <div class="form-group">
                         <label for="companyName">Company Name *</label>
                         <input type="text" id="companyName" placeholder="Your company name" required>
@@ -343,22 +342,20 @@
                             </span>
                         </div>
                     </div>
-               
+                </div>
                 
                 <div class="button-group">
                     <button type="button" class="btn btn-primary">Create Account</button>
                     <button type="button" class="btn btn-secondary" onclick="switchTab('job-seeker')">Back to Job Seeker</button>
                 </div>
-                    </form>
-           
             </div>
-
+            
             <div class="form-footer">
-                <p>Already have an account? <a href="login.html">Log in</a></p>
+                <p>Already have an account? <a href="#">Log in</a></p>
             </div>
-       
+             </form>
+        </div>
     </div>
-         </div>
 
     <script>
        // Tab switching functionality (waa sidii hore, waxba lagama bedelin appearance)
@@ -427,6 +424,7 @@ if (createAccountForm) {
 </body>
 
 </html>
+
 
 
 
