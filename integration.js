@@ -1,423 +1,198 @@
-// Integration.js - Central event handling for Job Portal Website
+// Integration.js - Connects frontend to backend API
+// Base URL for API endpoints
+const API_BASE_URL = 'https://smart-employment-service-6.onrender.com';
 
-// Utility Functions
-const $ = (id) => document.getElementById(id);
-const hide = (element) => element && (element.style.display = 'none');
-const show = (element) => element && (element.style.display = 'block');
-
-// Form Handling Functions
-function handleLogin(event) {
-    event.preventDefault();
-    console.log('Login form submitted');
-    
-    const email = $('loginEmail')?.value;
-    const password = $('loginPassword')?.value;
-    
-    if (!email || !password) {
-        console.error('Login form missing required fields');
-        alert('Please fill in all required fields');
-        return;
+// Utility function to get element by ID
+function getElement(id) {
+    const element = document.getElementById(id);
+    if (!element) {
+        console.warn(`Element with ID '${id}' not found`);
     }
-    
-    // Simulate API call
-    console.log(`Logging in with email: ${email}`);
-    // In a real application, you would make a fetch request here
+    return element;
 }
 
-function handleSignup(event) {
-    event.preventDefault();
-    console.log('Signup form submitted');
-    
-    const name = $('signupName')?.value;
-    const email = $('signupEmail')?.value;
-    const phone = $('signupPhone')?.value;
-    const password = $('signupPassword')?.value;
-    const userType = $('userType')?.value;
-    
-    if (!name || !email || !phone || !password || !userType) {
-        console.error('Signup form missing required fields');
-        alert('Please fill in all required fields');
-        return;
+// Show notification message to user
+function showMessage(message, isError = false) {
+    // Create message element if it doesn't exist
+    let messageEl = document.getElementById('api-message');
+    if (!messageEl) {
+        messageEl = document.createElement('div');
+        messageEl.id = 'api-message';
+        messageEl.style.position = 'fixed';
+        messageEl.style.top = '20px';
+        messageEl.style.right = '20px';
+        messageEl.style.padding = '15px 20px';
+        messageEl.style.borderRadius = '5px';
+        messageEl.style.zIndex = '10000';
+        messageEl.style.maxWidth = '300px';
+        messageEl.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        messageEl.style.fontFamily = 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+        messageEl.style.fontSize = '14px';
+        messageEl.style.transition = 'opacity 0.3s ease';
+        document.body.appendChild(messageEl);
     }
-    
-    console.log(`Creating ${userType} account for: ${name}, ${email}`);
-    // In a real application, you would make a fetch request here
-}
 
-function handlePostJob(event) {
-    event.preventDefault();
-    console.log('Post Job form submitted');
-    
-    const title = $('jobTitle')?.value;
-    const description = $('jobDescription')?.value;
-    const company = $('companyName')?.value;
-    const location = $('jobLocation')?.value;
-    const category = $('jobCategory')?.value;
-    const deadline = $('applicationDeadline')?.value;
-    
-    if (!title || !description || !company || !location || !category || !deadline) {
-        console.error('Post Job form missing required fields');
-        alert('Please fill in all required fields');
-        return;
-    }
-    
-    console.log(`Posting job: ${title} at ${company}`);
-    // In a real application, you would make a fetch request here
-}
-
-function handleJobSearch(event) {
-    event.preventDefault();
-    console.log('Job Search form submitted');
-    
-    const keyword = $('job-title')?.value;
-    const location = $('location')?.value;
-    const category = $('category')?.value;
-    
-    console.log(`Searching jobs with filters - Keyword: ${keyword}, Location: ${location}, Category: ${category}`);
-    // In a real application, you would make a fetch request here
-}
-
-function handleApplyJob(event) {
-    event.preventDefault();
-    console.log('Apply Job form submitted');
-    
-    const name = $('applicantName')?.value;
-    const email = $('applicantEmail')?.value;
-    const phone = $('applicantPhone')?.value;
-    const cvLink = $('cvLink')?.value;
-    const jobId = $('applyJobId')?.value;
-    
-    if (!name || !email || !phone || !cvLink || !jobId) {
-        console.error('Apply Job form missing required fields');
-        alert('Please fill in all required fields');
-        return;
-    }
-    
-    console.log(`Applying to job ${jobId} with applicant: ${name}, ${email}`);
-    // In a real application, you would make a fetch request here
-}
-
-// Modal Functions
-function toggleModal(modalId, show) {
-    const modal = $(modalId);
-    if (!modal) {
-        console.error(`Modal with ID ${modalId} not found`);
-        return;
-    }
-    
-    modal.style.display = show ? 'block' : 'none';
-    console.log(`${show ? 'Showing' : 'Hiding'} modal: ${modalId}`);
-}
-
-function closeAllModals() {
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-        modal.style.display = 'none';
-    });
-    console.log('All modals closed');
-}
-
-// Navigation Functions
-function handleTabSwitch(tabId) {
-    console.log(`Switching to tab: ${tabId}`);
-    
-    // Deactivate all tabs
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-    
-    // Activate the selected tab
-    const selectedTab = document.querySelector(`.tab[data-tab="${tabId}"]`);
-    if (selectedTab) {
-        selectedTab.classList.add('active');
-    }
-    
-    // Hide all form sections
-    document.querySelectorAll('.form-section').forEach(section => {
-        section.classList.remove('active');
-    });
-    
-    // Show the selected form section
-    const selectedSection = $(`${tabId}-form`);
-    if (selectedSection) {
-        selectedSection.classList.add('active');
-    }
-}
-
-// Password Visibility Toggle
-function togglePassword(inputId, iconElement) {
-    const passwordInput = $(inputId);
-    if (!passwordInput) {
-        console.error(`Password input with ID ${inputId} not found`);
-        return;
-    }
-    
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        iconElement.classList.remove('fa-eye');
-        iconElement.classList.add('fa-eye-slash');
-        console.log(`Password visible for field: ${inputId}`);
+    // Style based on error/success
+    if (isError) {
+        messageEl.style.backgroundColor = '#ffebee';
+        messageEl.style.color = '#c62828';
+        messageEl.style.borderLeft = '4px solid #c62828';
     } else {
-        passwordInput.type = 'password';
-        iconElement.classList.remove('fa-eye-slash');
-        iconElement.classList.add('fa-eye');
-        console.log(`Password hidden for field: ${inputId}`);
+        messageEl.style.backgroundColor = '#e8f5e9';
+        messageEl.style.color = '#2e7d32';
+        messageEl.style.borderLeft = '4px solid #2e7d32';
     }
+
+    messageEl.textContent = message;
+    messageEl.style.opacity = '1';
+    messageEl.style.display = 'block';
+
+    // Hide message after 5 seconds
+    setTimeout(() => {
+        messageEl.style.opacity = '0';
+        setTimeout(() => {
+            messageEl.style.display = 'none';
+        }, 300);
+    }, 5000);
 }
 
-// Mobile Menu Functions
-function toggleMobileMenu() {
-    const mobileNav = document.querySelector('.mobile-nav');
-    const overlay = document.querySelector('.overlay');
+// Handle form submission
+async function handleFormSubmit(event, endpoint, method = 'POST') {
+    event.preventDefault();
     
-    if (!mobileNav || !overlay) {
-        console.error('Mobile navigation elements not found');
-        return;
-    }
+    const form = event.target;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.textContent;
     
-    const isActive = mobileNav.classList.contains('active');
-    
-    if (isActive) {
-        mobileNav.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-        console.log('Mobile menu closed');
-    } else {
-        mobileNav.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        console.log('Mobile menu opened');
-    }
-}
-
-// Event Handler Attachment Functions
-function attachFormHandlers() {
-    // Login form
-    const loginForm = $('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
-        console.log('Attached handler to login form');
-    }
-    
-    // Signup form
-    const signupForm = $('signupForm');
-    if (signupForm) {
-        signupForm.addEventListener('submit', handleSignup);
-        console.log('Attached handler to signup form');
-    }
-    
-    // Post Job form
-    const postJobForm = $('postJobForm');
-    if (postJobForm) {
-        postJobForm.addEventListener('submit', handlePostJob);
-        console.log('Attached handler to post job form');
-    }
-    
-    // Job Search form
-    const jobSearchForm = $('jobSearchForm');
-    if (jobSearchForm) {
-        jobSearchForm.addEventListener('submit', handleJobSearch);
-        console.log('Attached handler to job search form');
-    }
-    
-    // Apply Job form
-    const applyForm = $('applyForm');
-    if (applyForm) {
-        applyForm.addEventListener('submit', handleApplyJob);
-        console.log('Attached handler to apply job form');
-    }
-}
-
-function attachModalHandlers() {
-    // Modal open buttons
-    const loginBtn = $('loginBtn');
-    if (loginBtn) {
-        loginBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleModal('loginModal', true);
-        });
-        console.log('Attached handler to login button');
-    }
-    
-    const signupBtn = $('signupBtn');
-    if (signupBtn) {
-        signupBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleModal('signupModal', true);
-        });
-        console.log('Attached handler to signup button');
-    }
-    
-    const postJobBtn = $('postJobBtn');
-    if (postJobBtn) {
-        postJobBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
-            if (user.userType === 'employer') {
-                toggleModal('postJobModal', true);
-            } else {
-                alert('Only employers can post jobs');
-                toggleModal('signupModal', true);
-            }
-        });
-        console.log('Attached handler to post job button');
-    }
-    
-    // Modal close buttons
-    const closeButtons = document.querySelectorAll('.close');
-    closeButtons.forEach(button => {
-        button.addEventListener('click', closeAllModals);
-    });
-    console.log(`Attached handlers to ${closeButtons.length} close buttons`);
-    
-    // Overlay click to close modals
-    const overlay = document.querySelector('.overlay');
-    if (overlay) {
-        overlay.addEventListener('click', closeAllModals);
-        console.log('Attached handler to overlay');
-    }
-    
-    // Switch between login and signup modals
-    const switchToSignup = $('switchToSignup');
-    if (switchToSignup) {
-        switchToSignup.addEventListener('click', (e) => {
-            e.preventDefault();
-            closeAllModals();
-            toggleModal('signupModal', true);
-        });
-        console.log('Attached handler to switch to signup');
-    }
-    
-    const switchToLogin = $('switchToLogin');
-    if (switchToLogin) {
-        switchToLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            closeAllModals();
-            toggleModal('loginModal', true);
-        });
-        console.log('Attached handler to switch to login');
-    }
-}
-
-function attachTabHandlers() {
-    // Tab switching
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const tabId = tab.getAttribute('data-tab');
-            handleTabSwitch(tabId);
-        });
-    });
-    console.log(`Attached handlers to ${tabs.length} tabs`);
-    
-    // Back to Job Seeker button
-    const backToJobSeeker = document.querySelector('.btn-secondary');
-    if (backToJobSeeker && backToJobSeeker.textContent.includes('Back to Job Seeker')) {
-        backToJobSeeker.addEventListener('click', () => {
-            handleTabSwitch('job-seeker');
-        });
-        console.log('Attached handler to back to job seeker button');
-    }
-}
-
-function attachPasswordToggleHandlers() {
-    // Password visibility toggles
-    const toggleButtons = document.querySelectorAll('.toggle-password');
-    toggleButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const inputId = this.getAttribute('onclick').match(/'([^']+)'/)[1];
-            togglePassword(inputId, this);
-        });
-    });
-    console.log(`Attached handlers to ${toggleButtons.length} password toggle buttons`);
-}
-
-function attachMobileMenuHandlers() {
-    // Mobile menu toggle
-    const mobileToggle = document.querySelector('.mobile-toggle');
-    if (mobileToggle) {
-        mobileToggle.addEventListener('click', toggleMobileMenu);
-        console.log('Attached handler to mobile menu toggle');
-    }
-    
-    // Mobile menu close
-    const closeMenu = document.querySelector('.close-menu');
-    if (closeMenu) {
-        closeMenu.addEventListener('click', toggleMobileMenu);
-        console.log('Attached handler to mobile menu close button');
-    }
-    
-    // Mobile menu links
-    const mobileLinks = document.querySelectorAll('.mobile-links a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', toggleMobileMenu);
-    });
-    console.log(`Attached handlers to ${mobileLinks.length} mobile menu links`);
-}
-
-function attachApplyJobHandlers() {
-    // Apply job buttons
-    const applyButtons = document.querySelectorAll('.btn-apply');
-    applyButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const jobId = this.getAttribute('data-job-id');
-            const jobTitle = this.getAttribute('data-job-title');
-            
-            const user = JSON.parse(localStorage.getItem('user') || '{}');
-            
-            if (!user._id) {
-                alert('Please log in to apply for jobs');
-                toggleModal('loginModal', true);
-                return;
-            }
-            
-            if (user.userType !== 'job_seeker') {
-                alert('Only job seekers can apply for jobs');
-                return;
-            }
-            
-            if ($('applyJobId')) {
-                $('applyJobId').value = jobId;
-            }
-            
-            if ($('applyJobTitle')) {
-                $('applyJobTitle').textContent = jobTitle;
-            }
-            
-            // Pre-fill form with user data if available
-            if (user._id) {
-                if ($('applicantName')) $('applicantName').value = user.name || '';
-                if ($('applicantEmail')) $('applicantEmail').value = user.email || '';
-                if ($('applicantPhone')) $('applicantPhone').value = user.phone || '';
-            }
-            
-            toggleModal('applyModal', true);
-        });
-    });
-    console.log(`Attached handlers to ${applyButtons.length} apply job buttons`);
-}
-
-// Initialize all event listeners
-function init() {
-    console.log('Initializing Integration.js');
+    // Disable submit button to prevent multiple submissions
+    submitButton.disabled = true;
+    submitButton.textContent = 'Processing...';
     
     try {
-        attachFormHandlers();
-        attachModalHandlers();
-        attachTabHandlers();
-        attachPasswordToggleHandlers();
-        attachMobileMenuHandlers();
-        attachApplyJobHandlers();
+        // Collect form data
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
         
-        console.log('Integration.js initialized successfully');
+        console.log(`Submitting to ${endpoint}:`, data);
+        
+        // Send request to API
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+            // Success handling
+            console.log('API Success:', result);
+            showMessage(result.message || 'Operation completed successfully!');
+            
+            // Reset form on successful submission
+            form.reset();
+            
+            // Redirect if needed
+            if (endpoint === '/api/login' && result.redirect) {
+                setTimeout(() => {
+                    window.location.href = result.redirect;
+                }, 1500);
+            }
+        } else {
+            // Error handling
+            console.error('API Error:', result);
+            showMessage(result.message || 'An error occurred. Please try again.', true);
+        }
     } catch (error) {
-        console.error('Error during Integration.js initialization:', error);
+        console.error('Request failed:', error);
+        showMessage('Network error. Please check your connection and try again.', true);
+    } finally {
+        // Re-enable submit button
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
     }
 }
 
-// Run initialization when DOM is fully loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
+// Initialize event listeners for forms
+function initializeFormListeners() {
+    console.log('Initializing form listeners...');
+    
+    // Create Account Form (create-account.html)
+    const createAccountForm = getElement('signupForm');
+    if (createAccountForm) {
+        createAccountForm.addEventListener('submit', (e) => {
+            handleFormSubmit(e, '/api/create-account');
+        });
+        console.log('Create account form listener added');
+    }
+    
+    // Login Form (login.html)
+    const loginForm = getElement('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            handleFormSubmit(e, '/api/login');
+        });
+        console.log('Login form listener added');
+    }
+    
+    // Post Job Form (post-job.html)
+    const postJobForm = getElement('postJobForm');
+    if (postJobForm) {
+        postJobForm.addEventListener('submit', (e) => {
+            handleFormSubmit(e, '/api/post-job');
+        });
+        console.log('Post job form listener added');
+    }
+    
+    // Internship Form (internship.html)
+    const internshipForm = getElement('internshipForm');
+    if (internshipForm) {
+        internshipForm.addEventListener('submit', (e) => {
+            handleFormSubmit(e, '/api/internship');
+        });
+        console.log('Internship form listener added');
+    }
+    
+    // Additional forms can be added here as needed
+    
+    console.log('All form listeners initialized');
 }
+
+// Initialize when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing integration...');
+    
+    // Add some basic styles for the message element
+    const style = document.createElement('style');
+    style.textContent = `
+        #api-message {
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Initialize all form listeners
+    initializeFormListeners();
+    
+    console.log('Integration.js loaded successfully');
+});
+
+// Handle page navigation without breaking the script
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Page was loaded from cache, reinitialize listeners
+        setTimeout(initializeFormListeners, 100);
+    }
+});
