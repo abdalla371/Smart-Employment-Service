@@ -1,287 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post a Job - Jobberman</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post a Job</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fc;
+      margin: 30px;
+      padding: 50px;
+      font-size: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    p.desc {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .salary-range {
+      display: flex;
+      gap: 10px;
+    }
+    .salary-range input {
+      flex: 1;
+    }
+
+    button {
+      margin-top: 20px;
+      /* width: 100%; */
+      padding: 14px;
+      background: #0066ff;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  
+
+    button:hover {
+      background: #0052cc;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 15px;
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-      <header class="header">
-        <div class="container">
-           
-                <a href="index.html">
-                    <img src="logo-removebg-preview.png" alt="Jobberman Logo" width="300px" height="100" style="filter: none;">
-            
-             
-            
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#">Posts</a></li>
-                    <li><a href="#">Membership</a></li>
-                    <li class="dropdown">
-                        <a href="#">More <i class="fas fa-chevron-down"></i></a>
-                        <div class="dropdown-menu">
-                            <a href="#">FAQs</a>
-                            <a href="about us.html">About us</a>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-            <div class="auth-buttons">
-                <a href="post-job.html" class="btn btn-post-job">Post a Job</a>
-                <a href="login.html" class="btn btn-login">Log In</a>
-                <a href="create-account.html" class="btn btn-primary">Sign Up</a>
-            </div>
-            <div class="mobile-menu-toggle">
-                <!-- Mobile Toggle -->
-                <button class="mobile-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-            
-   
 
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav">
-        <div class="mobile-header">
-            <!-- <img src="logo-removebg-preview.png" alt="smartemployment" height="50" width="100"> -->
-            <button class="close-menu">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="mobile-auth">
-            <a href="login.html" class="btn btn-login">Log In</a>
-            <a href="create-account.html" class="btn btn-signup">Sign Up</a>
-            <a href="post-job.html" class="btn btn-post">Post a Job</a>
-        </div>
-        
-        <ul class="mobile-links">
-            <li>
-                <a href="index.html" class="section-title">Find a Job</a>
-            </li>
-            <li>
-                <a href="Available Jobs.html" class="section-title">Available Jobs</a>
-             
-            </li>
-            <li>
-                <a href="#" class="section-title">Membership</a>
-                
-            </li>
-          
-            <li>
-                <a href="#" class="section-title">Help Center</a>
-                <ul class="mobile-sublinks">
-                    <li><a href="#">Frequently Asked Questions</a></li>
-                    <li><a href="about us.html">About us</a></li>
-                    
-                </ul>
-            </li>
-        </ul>
-            </div>
-        </div>
-    </header>
 
-    <!-- Post Job Form Section -->
-    <section class="post-job-form">
-        <div class="container">
-            <div class="form-container">
-                <h1>Post a Job</h1>
-                <p>Fill out the form below to post your job opening</p>
-                
-                <form id="jobPostingForm">
-                    <div class="form-group">
-                        <label for="jobTitle">Job Title *</label>
-                        <input type="text" id="jobTitle" name="jobTitle" required placeholder="e.g. Frontend Developer">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="jobDescription">Job Description *</label>
-                        <textarea id="jobDescription" name="jobDescription" rows="6" required placeholder="Describe the job responsibilities and requirements"></textarea>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="companyName">Company Name *</label>
-                            <input type="text" id="companyName" name="companyName" required placeholder="Your company name">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="location">Location *</label>
-                            <input type="text" id="location" name="location" required placeholder="e.g. Lagos, Nigeria or Remote">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="salaryMin">Salary Range (optional)</label>
-                            <div class="salary-range">
-                                <input type="number" id="salaryMin" name="salaryMin" placeholder="Min">
-                                <span>to</span>
-                                <input type="number" id="salaryMax" name="salaryMax" placeholder="Max">
-                                <select id="salaryCurrency" name="salaryCurrency">
-                                    <option value="NGN">NGN</option>
-                                    <option value="USD">USD</option>
-                                    <option value="GHS">GHS</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="jobType">Job Type *</label>
-                            <select id="jobType" name="jobType" required>
-                                <option value="">Select job type</option>
-                                <option value="full-time">Full-time</option>
-                                <option value="part-time">Part-time</option>
-                                <option value="contract">Contract</option>
-                                <option value="internship">Internship</option>
-                                <option value="remote">Remote</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="jobCategory">Job Category *</label>
-                            <select id="jobCategory" name="jobCategory" required>
-                                <option value="">Select category</option>
-                                <option value="it">IT & Telecoms</option>
-                                <option value="finance">Accounting & Finance</option>
-                                <option value="healthcare">Healthcare</option>
-                                <option value="education">Education</option>
-                                <option value="sales">Sales & Marketing</option>
-                                <option value="engineering">Engineering</option>
-                                <option value="customer-service">Customer Service</option>
-                                <option value="design">Creative & Design</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="applicationDeadline">Application Deadline *</label>
-                            <input type="date" id="applicationDeadline" name="applicationDeadline" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="applicationEmail">Application Email *</label>
-                        <input type="email" id="applicationEmail" name="applicationEmail" required placeholder="Email to receive applications">
-                    </div>
-                    
-                    <div class="form-submit">
-                        <button type="submit" class="btn btn-primary btn-large">Post Job</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
+  <div class="container">
+    <h2>Post a Job</h2>
+    <p class="desc">Fill out the form below to post your job opening</p><br><br>
 
-    <!-- Footer (same as index.html) -->
-    <footer class="footer">
-        <!-- Footer content from index.html -->
-    </footer>
- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileToggle = document.querySelector('.mobile-toggle');
-            const mobileNav = document.querySelector('.mobile-nav');
-            const closeMenu = document.querySelector('.close-menu');
-            const overlay = document.querySelector('.overlay');
-            
-            // Open mobile menu
-            mobileToggle.addEventListener('click', function() {
-                mobileNav.classList.add('active');
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-            
-            // Close mobile menu
-            function closeMobileMenu() {
-                mobileNav.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-            
-            closeMenu.addEventListener('click', closeMobileMenu);
-            overlay.addEventListener('click', closeMobileMenu);
-            
-            // Close menu when clicking on links
-            const mobileLinks = document.querySelectorAll('.mobile-links a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', closeMobileMenu);
-            });
-        });
-    </script>
-    <script src="script.js"></script>
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-top">
-                <div class="footer-column">
-                    <h4>For Individuals</h4>
-                    <ul>
-                        <li><a href="shaqotag.html">Shaqotag-program</a></li>
-                        <li><a href="internship.html">Internship-program</a></li>
-                        <li><a href="membership.html">Membership-program</a></li>
-                        <li><a href="form internship.html">Apply Internship</a></li>
-                        <li><a href="form shaqotag.html">Apply Shaqotag</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>For Employers</h4>
-                    <ul>
-                        <li><a href="post-job.html">Post a Job</a></li>
-                        <li><a href="#">Create account</a></li>
-                       
-                    </ul>
-                </div>
-                
-                
-                <div class="footer-column">
-                    <h4>Help center</h4>
-                    <ul>
-                        <li><a href="about us.html">About Us</a></li>
-                        <li><a href="#">Frequently asked Questions</a></li>
-                        
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h4>Connect With Us</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                    
-                    <div class="newsletter">
-                        <h4>Subscribe to Newsletter</h4>
-                        <form>
-                            <input type="email" placeholder="Your email address">
-                            <button type="submit" class="btn btn-primary">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <div class="footer-logo">
-                    <img src="logo-removebg-preview.png" alt="smartemployment logo">
-                </div>
-                <div class="copyright">
-                    <p>&copy; 2025 Smart Employment Service. All rights reserved.</p>
-                </div>
-                <div class="country-selector">
-                    <select>
-                        <option value="Mogadisho">Mogadisho</option>
-                        
-                    </select>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <script src="integration.js"></script>                
+    <form id="postJobForm">
+      <label for="jobTitle">Job Title *</label>
+      <input type="text" id="jobTitle" placeholder="e.g. Frontend Developer" required><br><br>
+
+      <label for="jobDescription">Job Description *</label>
+      <textarea id="jobDescription" placeholder="Describe the job responsibilities and requirements" required></textarea><br><br>
+
+      <label for="companyName">Company Name *</label>
+      <input type="text" id="companyName" placeholder="Your company name" required>
+
+      <label for="location">Location *</label>
+      <input type="text" id="location" placeholder="e.g. Lagos, Nigeria or Remote" required>
+
+      <label>Salary Range (optional)</label>
+      <div class="salary-range">
+        <input type="number" id="salaryMin" placeholder="Min">
+        <input type="number" id="salaryMax" placeholder="Max">
+        <select id="currency">
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="GBP">GBP</option>
+          <option value="KES">KES</option>
+          <option value="SOS">SOS</option>
+        </select>
+      </div>
+
+      <label for="jobType">Job Type *</label>
+      <select id="jobType" required>
+        <option value="">Select job type</option>
+        <option value="Full-time">Full-time</option>
+        <option value="Part-time">Part-time</option>
+        <option value="Internship">Internship</option>
+        <option value="Remote">Remote</option>
+      </select>
+
+      <label for="jobCategory">Job Category *</label>
+      <select id="jobCategory" required>
+        <option value="">Select category</option>
+        <option value="IT">IT</option>
+        <option value="Finance">Finance</option>
+        <option value="Marketing">Marketing</option>
+        <option value="Healthcare">Healthcare</option>
+        <option value="Education">Education</option>
+      </select>
+
+      <label for="deadline">Application Deadline *</label>
+      <input type="date" id="deadline" required>
+
+      <label for="applicationEmail">Application Email *</label>
+      <input type="email" id="applicationEmail" placeholder="Email to receive applications" required>
+
+      <button type="submit" >Post a Job</button>
+    </form>
+  </div>
+
+  <script src="integration.js"></script>
 </body>
-
 </html>
