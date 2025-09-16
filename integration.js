@@ -1,198 +1,199 @@
-// Integration.js - Connects frontend to backend API
-// Base URL for API endpoints
-const API_BASE_URL = 'https://smart-employment-service-6.onrender.com';
+// integration.js
+// API base - UPDATE if your Render URL changes
+const API_BASE = "https://smart-employment-service-6.onrender.com/api";
 
-// Utility function to get element by ID
-function getElement(id) {
-    const element = document.getElementById(id);
-    if (!element) {
-        console.warn(`Element with ID '${id}' not found`);
-    }
-    return element;
+// --- Helpers ---
+function getToken() {
+  return localStorage.getItem("ses_token");
+}
+function setSession(userId, token) {
+  localStorage.setItem("ses_user", String(userId));
+  localStorage.setItem("ses_token", token);
+}
+function clearSession() {
+  localStorage.removeItem("ses_user");
+  localStorage.removeItem("ses_token");
+}
+function isLoggedIn() {
+  return !!getToken();
+}
+async function apiFetch(path, opts = {}) {
+  opts.headers = opts.headers || {};
+  opts.headers["Content-Type"] = "application/json";
+  const token = getToken();
+  if (token) opts.headers["Authorization"] = `Bearer ${token}`;
+  const res = await fetch(`${API_BASE}${path}`, opts);
+  const json = await res.json().catch(()=>({}));
+  return { ok: res.ok, status: res.status, data: json };
 }
 
-// Show notification message to user
-function showMessage(message, isError = false) {
-    // Create message element if it doesn't exist
-    let messageEl = document.getElementById('api-message');
-    if (!messageEl) {
-        messageEl = document.createElement('div');
-        messageEl.id = 'api-message';
-        messageEl.style.position = 'fixed';
-        messageEl.style.top = '20px';
-        messageEl.style.right = '20px';
-        messageEl.style.padding = '15px 20px';
-        messageEl.style.borderRadius = '5px';
-        messageEl.style.zIndex = '10000';
-        messageEl.style.maxWidth = '300px';
-        messageEl.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-        messageEl.style.fontFamily = 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
-        messageEl.style.fontSize = '14px';
-        messageEl.style.transition = 'opacity 0.3s ease';
-        document.body.appendChild(messageEl);
-    }
+// --- UI helpers (non-intrusive) ---
+function showMsg(msg) { alert(msg); } // keep it simple, don't change layout
+function requireLoginRedirect() {
+  showMsg("You must be logged in to continue. You will be redirected to Login.");
+  window.location.href = "/login.html";
+}
 
-    // Style based on error/success
-    if (isError) {
-        messageEl.style.backgroundColor = '#ffebee';
-        messageEl.style.color = '#c62828';
-        messageEl.style.borderLeft = '4px solid #c62828';
+// --- Signup (individual & company) ---
+// Individual signup form id: createAccountFormIndividual
+const indForm = document.getElementById("createAccountFormIndividual");
+if (indForm) {
+  indForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    // map your fields (IDs used in the HTML you provided)
+    const payload = {
+      type: "individual",
+      name: document.getElementById("indName")?.value || document.getElementById("name")?.value || "",
+      email: document.getElementById("indEmail")?.value || document.getElementById("email")?.value || "",
+      password: document.getElementById("indPassword")?.value || ""
+    };
+    const r = await apiFetch("/create-account", { method: "POST", body: JSON.stringify(payload) });
+    if (r.ok) {
+      showMsg(r.data.message || "Registered. Please log in.");
+      window.location.href = "/login.html";
     } else {
-        messageEl.style.backgroundColor = '#e8f5e9';
-        messageEl.style.color = '#2e7d32';
-        messageEl.style.borderLeft = '4px solid #2e7d32';
+      showMsg(r.data.error || "Registration failed.");
     }
-
-    messageEl.textContent = message;
-    messageEl.style.opacity = '1';
-    messageEl.style.display = 'block';
-
-    // Hide message after 5 seconds
-    setTimeout(() => {
-        messageEl.style.opacity = '0';
-        setTimeout(() => {
-            messageEl.style.display = 'none';
-        }, 300);
-    }, 5000);
+  });
 }
 
-// Handle form submission
-async function handleFormSubmit(event, endpoint, method = 'POST') {
-    event.preventDefault();
-    
-    const form = event.target;
-    const submitButton = form.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.textContent;
-    
-    // Disable submit button to prevent multiple submissions
-    submitButton.disabled = true;
-    submitButton.textContent = 'Processing...';
-    
-    try {
-        // Collect form data
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-        
-        console.log(`Submitting to ${endpoint}:`, data);
-        
-        // Send request to API
-        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        });
-        
-        const result = await response.json();
-        
-        if (response.ok) {
-            // Success handling
-            console.log('API Success:', result);
-            showMessage(result.message || 'Operation completed successfully!');
-            
-            // Reset form on successful submission
-            form.reset();
-            
-            // Redirect if needed
-            if (endpoint === '/api/login' && result.redirect) {
-                setTimeout(() => {
-                    window.location.href = result.redirect;
-                }, 1500);
-            }
-        } else {
-            // Error handling
-            console.error('API Error:', result);
-            showMessage(result.message || 'An error occurred. Please try again.', true);
-        }
-    } catch (error) {
-        console.error('Request failed:', error);
-        showMessage('Network error. Please check your connection and try again.', true);
-    } finally {
-        // Re-enable submit button
-        submitButton.disabled = false;
-        submitButton.textContent = originalButtonText;
+// Company signup form id: createAccountFormCompany
+const compForm = document.getElementById("createAccountFormCompany");
+if (compForm) {
+  compForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const payload = {
+      type: "company",
+      name: document.getElementById("compName")?.value || "",
+      email: document.getElementById("compEmail")?.value || "",
+      password: document.getElementById("compPassword")?.value || ""
+    };
+    const r = await apiFetch("/create-account", { method: "POST", body: JSON.stringify(payload) });
+    if (r.ok) {
+      showMsg(r.data.message || "Company registered. Please log in.");
+      window.location.href = "/login.html";
+    } else {
+      showMsg(r.data.error || "Registration failed.");
     }
+  });
 }
 
-// Initialize event listeners for forms
-function initializeFormListeners() {
-    console.log('Initializing form listeners...');
-    
-    // Create Account Form (create-account.html)
-    const createAccountForm = getElement('signupForm');
-    if (createAccountForm) {
-        createAccountForm.addEventListener('submit', (e) => {
-            handleFormSubmit(e, '/api/create-account');
-        });
-        console.log('Create account form listener added');
+// --- Login (login.html form id: loginForm) ---
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail")?.value || document.getElementById("email")?.value || "";
+    const password = document.getElementById("loginPassword")?.value || document.getElementById("password")?.value || "";
+    const r = await apiFetch("/login", { method: "POST", body: JSON.stringify({ email, password }) });
+    if (r.ok && r.data.token) {
+      setSession(r.data.user_id, r.data.token);
+      showMsg("Login successful!");
+      // redirect to homepage or where user came from
+      window.location.href = "/";
+    } else {
+      showMsg(r.data.error || "Login failed.");
     }
-    
-    // Login Form (login.html)
-    const loginForm = getElement('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            handleFormSubmit(e, '/api/login');
-        });
-        console.log('Login form listener added');
-    }
-    
-    // Post Job Form (post-job.html)
-    const postJobForm = getElement('postJobForm');
-    if (postJobForm) {
-        postJobForm.addEventListener('submit', (e) => {
-            handleFormSubmit(e, '/api/post-job');
-        });
-        console.log('Post job form listener added');
-    }
-    
-    // Internship Form (internship.html)
-    const internshipForm = getElement('internshipForm');
-    if (internshipForm) {
-        internshipForm.addEventListener('submit', (e) => {
-            handleFormSubmit(e, '/api/internship');
-        });
-        console.log('Internship form listener added');
-    }
-    
-    // Additional forms can be added here as needed
-    
-    console.log('All form listeners initialized');
+  });
 }
 
-// Initialize when DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing integration...');
-    
-    // Add some basic styles for the message element
-    const style = document.createElement('style');
-    style.textContent = `
-        #api-message {
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(100px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Initialize all form listeners
-    initializeFormListeners();
-    
-    console.log('Integration.js loaded successfully');
+// --- Post Job (post-job.html id: postJobForm) ---
+const postJobForm = document.getElementById("postJobForm");
+if (postJobForm) {
+  postJobForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!isLoggedIn()) return requireLoginRedirect();
+
+    const payload = {
+      title: document.getElementById("jobTitle")?.value || "",
+      description: document.getElementById("jobDescription")?.value || "",
+      company: document.getElementById("companyName")?.value || "",
+      location: document.getElementById("location")?.value || "",
+      salary_min: document.getElementById("salaryMin")?.value || "",
+      salary_max: document.getElementById("salaryMax")?.value || "",
+      currency: document.getElementById("currency")?.value || "",
+      job_type: document.getElementById("jobType")?.value || "",
+      category: document.getElementById("jobCategory")?.value || "",
+      deadline: document.getElementById("deadline")?.value || "",
+      application_email: document.getElementById("applicationEmail")?.value || ""
+    };
+
+    const r = await apiFetch("/post-job", { method: "POST", body: JSON.stringify(payload) });
+    if (r.ok) {
+      showMsg(r.data.message || "Job posted.");
+      postJobForm.reset();
+    } else {
+      showMsg(r.data.error || "Failed to post job.");
+    }
+  });
+}
+
+// --- Internship Form (internship.html id: internshipForm) ---
+const internshipForm = document.getElementById("internshipForm");
+if (internshipForm) {
+  internshipForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!isLoggedIn()) return requireLoginRedirect();
+
+    // collect fields (names from the HTML you supplied)
+    const form = internshipForm;
+    const payload = Object.fromEntries(new FormData(form).entries());
+    const r = await apiFetch("/internship", { method: "POST", body: JSON.stringify(payload) });
+    if (r.ok) {
+      showMsg(r.data.message || "Internship submitted.");
+      form.reset();
+      // hide modal if present
+      try { document.getElementById("internshipModal").style.display = "none"; } catch {}
+    } else {
+      showMsg(r.data.error || "Failed to submit internship.");
+    }
+  });
+}
+
+// --- Jobseeking Form (jobseeking.html id: jobseekingForm) ---
+const jobseekingForm = document.getElementById("jobseekingForm");
+if (jobseekingForm) {
+  jobseekingForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!isLoggedIn()) return requireLoginRedirect();
+
+    const form = jobseekingForm;
+    const payload = Object.fromEntries(new FormData(form).entries());
+    const r = await apiFetch("/jobseeker", { method: "POST", body: JSON.stringify(payload) });
+    if (r.ok) {
+      showMsg(r.data.message || "Application submitted.");
+      form.reset();
+      try { document.getElementById("jobseekingModal").style.display = "none"; } catch {}
+    } else {
+      showMsg(r.data.error || "Failed to submit application.");
+    }
+  });
+}
+
+// --- Featured jobs Apply buttons (uses data-job-id on each button) ---
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".btn-apply").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+      if (!isLoggedIn()) return requireLoginRedirect();
+
+      const jobId = btn.getAttribute("data-job-id");
+      const jobTitle = btn.getAttribute("data-job-title");
+      const company = btn.getAttribute("data-company");
+
+      // Optionally you can prompt for a quick message or CV link; for now basic apply:
+      const r = await apiFetch("/apply-job", { method: "POST", body: JSON.stringify({ job_id: jobId }) });
+      if (r.ok) {
+        showMsg(r.data.message || `Applied to ${jobTitle} at ${company}`);
+      } else {
+        showMsg(r.data.error || "Failed to apply");
+      }
+    });
+  });
 });
 
-// Handle page navigation without breaking the script
-window.addEventListener('pageshow', function(event) {
-    if (event.persisted) {
-        // Page was loaded from cache, reinitialize listeners
-        setTimeout(initializeFormListeners, 100);
-    }
-});
+// --- Simple logout helper if you want to call it from UI ---
+window.logout = function() {
+  clearSession();
+  showMsg("Logged out");
+  window.location.href = "/";
+};
