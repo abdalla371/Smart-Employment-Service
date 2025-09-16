@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="so">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Internship Application - Smart Employment</title>
+  <title>Jobseeking Application - Smart Employment</title>
   <style>
+   
     :root{
       --bg:#0f1724;
       --card:#0b1220;
@@ -16,165 +17,36 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--white);background:linear-gradient(180deg,#071028 0%, #0b1220 100%);}
-
-    /* Container centers the card */
-    .container{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:32px;
-    }
-
-    /* Card */
-    .card{
-      width:100%;
-      max-width:920px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-      border-radius:var(--radius);
-      padding:28px;
-      box-shadow: 0 10px 30px rgba(2,6,23,0.7);
-      border: 1px solid rgba(255,255,255,0.04);
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:22px;
-    }
-
-    .card .intro{
-      padding-right:6px;
-    }
-
-    .title{
-      font-size:20px;
-      font-weight:700;
-      margin:0 0 8px 0;
-      color:var(--white);
-    }
-    .subtitle{
-      color:var(--muted);
-      margin:0 0 18px 0;
-      font-size:14px;
-      line-height:1.45;
-    }
-
-    /* Form area */
-    form{
-      width:100%;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    label{
-      display:block;
-      font-size:13px;
-      color:var(--muted);
-      margin-bottom:6px;
-      font-weight:600;
-    }
-
-    /* Input styles */
-    .input, select, textarea {
-      width:100%;
-      padding:12px 14px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-      color:var(--white);
-      font-size:14px;
-      outline: none;
-    }
-    .input:focus, select:focus, textarea:focus {
-      box-shadow: 0 6px 20px rgba(21,101,232,0.12);
-      border-color: var(--accent);
-      background: rgba(255,255,255,0.02);
-    }
-
-    /* Two-column pairs in form */
-    .row {
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-
-    /* Full width single column */
-    .full { grid-column: 1 / -1; }
-
-    /* Radios inline */
-    .inline-group {
-      display:flex;
-      gap:12px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    .radio-label {
-      display:flex;
-      align-items:center;
-      gap:8px;
-      background: rgba(255,255,255,0.02);
-      padding:8px 12px;
-      border-radius:8px;
-      border:1px solid rgba(255,255,255,0.03);
-      font-size:14px;
-      cursor:pointer;
-      color:var(--white);
-    }
-    .radio-label input { accent-color: var(--accent); }
-
-    /* Submit button */
-    .actions {
-      margin-top:8px;
-      display:flex;
-      gap:12px;
-      align-items:center;
-    }
-    .btn {
-      background: linear-gradient(180deg,var(--accent),var(--accent-2));
-      color:var(--white);
-      padding:11px 18px;
-      border-radius:10px;
-      border: none;
-      cursor:pointer;
-      font-weight:700;
-      letter-spacing:0.2px;
-      box-shadow: 0 8px 20px rgba(21,101,232,0.18);
-    }
-    .btn.secondary{
-      background:transparent;
-      border:1px solid rgba(255,255,255,0.06);
-      color:var(--muted);
-      font-weight:600;
-      box-shadow:none;
-    }
-
-    .note{
-      color:var(--muted);
-      font-size:13px;
-      margin-top:6px;
-    }
-
-    /* Responsive */
-    @media (max-width:920px){
-      .card{grid-template-columns: 1fr; padding:20px;}
-      .row{grid-template-columns:1fr;}
-    }
-
-    /* small touches */
-    .field-help { font-size:12px;color:var(--muted);margin-top:6px; }
-    select option { color: #111; } /* readable inside select on some platforms */
+    .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px;}
+    .card{width:100%;max-width:920px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));border-radius:var(--radius);padding:28px;box-shadow:0 10px 30px rgba(2,6,23,0.7);border:1px solid rgba(255,255,255,0.04);display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+    .card .intro{padding-right:6px;}
+    .title{font-size:20px;font-weight:700;margin:0 0 8px 0;color:var(--white);}
+    .subtitle{color:var(--muted);margin:0 0 18px 0;font-size:14px;line-height:1.45;}
+    form{width:100%;display:flex;flex-direction:column;gap:12px;}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:600;}
+    .input,select,textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:var(--white);font-size:14px;outline:none;}
+    .input:focus,select:focus,textarea:focus{box-shadow:0 6px 20px rgba(21,101,232,0.12);border-color:var(--accent);background:rgba(255,255,255,0.02);}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .full{grid-column:1 / -1;}
+    .inline-group{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+    .radio-label{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);font-size:14px;cursor:pointer;color:var(--white);}
+    .radio-label input{accent-color:var(--accent);}
+    .actions{margin-top:8px;display:flex;gap:12px;align-items:center;}
+    .btn{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:var(--white);padding:11px 18px;border-radius:10px;border:none;cursor:pointer;font-weight:700;letter-spacing:0.2px;box-shadow:0 8px 20px rgba(21,101,232,0.18);}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:600;box-shadow:none;}
+    .note{color:var(--muted);font-size:13px;margin-top:6px;}
+    @media (max-width:920px){.card{grid-template-columns:1fr;padding:20px;}.row{grid-template-columns:1fr;}}
+    .field-help{font-size:12px;color:var(--muted);margin-top:6px;}
+    select option{color:#111;}
+ 
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="card" role="region" aria-label="Internship application form card">
-
-      <!-- Left column: intro / instructions -->
+    <div class="card" role="region" aria-label="Jobseeking application form card">
       <div class="intro">
-        <h1 class="title">Apply for Shaqo-tag</h1>
-        <p class="subtitle">
-          Fadlan buuxi foomkan si aad uga mid noqoto barnaamijka shaqo-tag. Waxaanu kaa codsaneynaa macluumaad sax ah si loogu fududeeyo qiimeynta.
-        </p>
-
+        <h1 class="title">Apply for Job</h1>
+        <p class="subtitle">Fadlan buuxi foomkan si aad ugu dalbato shaqooyinka banaan...</p>
         <div style="margin-top:18px;">
           <p style="font-weight:700;margin:0 0 6px 0">Maxaad u baahan tahay inaad ogaato</p>
           <ul style="color:var(--muted);font-size:13px;line-height:1.6;padding-left:18px;margin-top:8px">
@@ -185,12 +57,12 @@
         </div>
       </div>
 
-      <!-- Right column: the actual form -->
-      <form action="#" method="POST" autocomplete="on" novalidate>
+      <!-- Jobseeking Form -->
+      <form id="jobseekingForm" action="#" method="POST" autocomplete="on" novalidate>
         <!-- Name -->
         <div class="full">
           <label for="name">Name / Magaca</label>
-          <input id="name" class="input" name="name" type="text" placeholder="Magacaaga buuxa" required>
+          <input id="name" class="input" name="name" type="text" required>
         </div>
 
         <!-- Gender + Age -->
@@ -198,107 +70,73 @@
           <div>
             <label for="gender">Gender / Jinsiga</label>
             <select id="gender" name="gender" class="input" required>
-              <option value="" selected disabled>Dooro jinsiga</option>
+              <option value="" selected disabled>Dooro</option>
               <option value="male">Rag</option>
               <option value="female">Dumar</option>
-              <option value="other">Kale</option>
             </select>
           </div>
-
           <div>
             <label for="age">Age / Da'da</label>
-            <input id="age" class="input" name="age" type="number" min="15" max="90" placeholder="Tusaale: 22" required>
+            <input id="age" class="input" name="age" type="number" min="15" max="90" required>
           </div>
         </div>
 
-        <!-- Phone + Whatsapp -->
+        <!-- Phone + Email -->
         <div class="row">
           <div>
-            <label for="phone">Number / Lambarka</label>
-            <input id="phone" class="input" name="phone" type="tel" pattern="[0-9+()\- ]{6,25}" placeholder="+252 6xx xxx xxx" required>
-            <div class="field-help">Fadlan geli lambarka taleefanka oo sax ah.</div>
+            <label for="phone">Phone</label>
+            <input id="phone" class="input" name="phone" type="tel" required>
           </div>
-
-          <div>
-            <label for="whatsapp">WhatsApp Number</label>
-            <input id="whatsapp" class="input" name="whatsapp" type="tel" pattern="[0-9+()\- ]{6,25}" placeholder="+252 6xx xxx xxx">
-          </div>
-        </div>
-
-        <!-- Email + District -->
-        <div class="row">
           <div>
             <label for="email">Email</label>
-            <input id="email" class="input" name="email" type="email" placeholder="email@example.com" required>
-          </div>
-
-          <div>
-            <label for="district">District / Degmo</label>
-            <input id="district" class="input" name="district" type="text" placeholder="Degmada aad degan tahay" required>
+            <input id="email" class="input" name="email" type="email" required>
           </div>
         </div>
 
-        <!-- University + Education level -->
+        <!-- District + Education -->
         <div class="row">
           <div>
-            <label for="university">University / Jaamacad</label>
-            <input id="university" class="input" name="university" type="text" placeholder="Magaca Jaamacadda ama iskuulka" required>
+            <label for="district">District / Degmo</label>
+            <input id="district" class="input" name="district" type="text" required>
           </div>
-
           <div>
-            <label for="education">Education level / Heerka Waxbarasho</label>
+            <label for="education">Education Level</label>
             <select id="education" name="education" class="input" required>
-              <option value="" selected disabled>Dooro heerka waxbarasho</option>
-              <option value="highschool">High School (Dugsiga sare)</option>
-              <option value="bachelor">Diploma (Shahaadada koowaad)</option>
-              <option value="master">Master (Shahaado Sare)</option>
-              <option value="other">PHD</option>
+              <option value="" selected disabled>Dooro</option>
+              <option value="highschool">High School</option>
+              <option value="bachelor">Bachelor</option>
+              <option value="master">Master</option>
             </select>
           </div>
         </div>
 
-        <!-- Department + Year -->
+        <!-- Skills + Experience -->
         <div class="row">
           <div>
-            <label for="department">Takhasuska/Field of study</label>
-            <input id="department" class="input" name="department" type="text" placeholder="Tusaale: Computer Science" required>
+            <label for="skills">Skills / Xirfadaha</label>
+            <input id="skills" class="input" name="skills" type="text" placeholder="Tusaale: Coding, Marketing..." required>
           </div>
-
-          <!-- <div>
-            <label for="year">Sanadka aad mareyso ama aad dhammeysay jaamacada</label>
-            <input id="year" class="input" name="year" type="text" placeholder="Tusaale: 3rd Year ama 2024" required>
-          </div>
-        </div> -->
-
-        <!-- Previous internship? -->
-        <div class="full">
-          <label>Ma jiran waayo-aragnimo shaqo </label>
-          <div class="inline-group" role="radiogroup" aria-label="Hore internship">
-            <label class="radio-label"><input type="radio" name="prev_intern" value="haa" required> Haa</label>
-            <label class="radio-label"><input type="radio" name="prev_intern" value="maya" required> Maya</label>
+          <div>
+            <label for="experience">Work Experience</label>
+            <input id="experience" class="input" name="experience" type="text" placeholder="Tusaale: 2 sano at XYZ" required>
           </div>
         </div>
 
-        <!-- Internship type -->
+        <!-- Job type -->
         <div class="full">
-          <label>Nooca shaqada aad rabto</label>
-          <div class="inline-group" role="radiogroup" aria-label="Nooca internship">
-            <label class="radio-label"><input type="radio" name="intern_type" value="part-time" required> Part-time</label>
-            <label class="radio-label"><input type="radio" name="intern_type" value="full-time" required> Full-time</label>
+          <label>Job Type</label>
+          <div class="inline-group">
+            <label class="radio-label"><input type="radio" name="job_type" value="part-time" required> Part-time</label>
+            <label class="radio-label"><input type="radio" name="job_type" value="full-time" required> Full-time</label>
           </div>
         </div>
 
-        <!-- Actions -->
         <div class="actions full">
           <button type="submit" class="btn">Submit Application</button>
           <button type="reset" class="btn secondary">Clear</button>
         </div>
-
-        <p class="note full">By submitting, you agree that your data will be used to process your shaqo-tag application. This is a static HTML form — connect it to a backend to save responses.</p>
       </form>
     </div>
   </div>
-  <script src="integration.js"></script>
 </body>
 </html>
-
