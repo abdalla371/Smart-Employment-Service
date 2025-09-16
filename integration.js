@@ -36,7 +36,7 @@ function requireLoginRedirect() {
 
 // --- Signup (individual & company) ---
 // Individual signup form id: createAccountFormIndividual
-const indForm = document.getElementById("createAccountFormIndividual");
+const indForm = document.getElementById("individualForm");
 if (indForm) {
   indForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -197,4 +197,5 @@ window.logout = function() {
   showMsg("Logged out");
   window.location.href = "/";
 };
+
 
