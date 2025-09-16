@@ -465,96 +465,126 @@
             </div>
         </div>
     </section>
-    <section class="featured-jobs">
-        <div class="container">
-            <div class="section-header">
-                <h2>Featured Jobs</h2>
-                <a href="#" class="view-all">View all jobs <i class="fas fa-arrow-right"></i></a>
-            </div>
-            
-            <div class="jobs-grid">
-                <!-- Job Card 1 -->
-                <div class="job-card">
-                    <div class="company-logo">
-                        <img src="https://via.placeholder.com/50" alt="Company Logo">
-                    </div>
-                    <div class="job-details">
-                        <h3>Frontend Developer</h3>
-                        <p class="company-name">Tech Solutions Inc.</p>
-                        <div class="job-meta">
-                            <span><i class="fas fa-map-marker-alt"></i> Mogadisho, Somalia</span>
-                            <span><i class="fas fa-clock"></i> Full-time</span>
-                            <span><i class="fas fa-money-bill-wave"></i> $250,000 - $400,000</span>
-                        </div>
-                    </div>
-                    <div class="job-actions">
-                        <span class="time-posted">2 days ago</span>
-                        <button class="btn btn-apply">Apply</button>
-                    </div>
-                </div>
-                
-                <!-- Job Card 2 -->
-                <div class="job-card">
-                    <div class="company-logo">
-                        <img src="https://via.placeholder.com/50" alt="Company Logo">
-                    </div>
-                    <div class="job-details">
-                        <h3>Accountant</h3>
-                        <p class="company-name">Finance Partners Ltd</p>
-                        <div class="job-meta">
-                            <span><i class="fas fa-map-marker-alt"></i> Mogadisho, Somalia</span>
-                            <span><i class="fas fa-clock"></i> Full-time</span>
-                            <span><i class="fas fa-money-bill-wave"></i> $180,000 - $300,000</span>
-                        </div>
-                    </div>
-                    <div class="job-actions">
-                        <span class="time-posted">1 week ago</span>
-                        <button class="btn btn-apply">Apply</button>
-                    </div>
-                </div>
-                
-                <!-- Job Card 3 -->
-                <div class="job-card">
-                    <div class="company-logo">
-                        <img src="https://via.placeholder.com/50" alt="Company Logo">
-                    </div>
-                    <div class="job-details">
-                        <h3>Customer Service Representative</h3>
-                        <p class="company-name">Service Solutions</p>
-                        <div class="job-meta">
-                            <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-                            <span><i class="fas fa-clock"></i> Part-time</span>
-                            <span><i class="fas fa-money-bill-wave"></i> $120,000 - $200,000</span>
-                        </div>
-                    </div>
-                    <div class="job-actions">
-                        <span class="time-posted">3 days ago</span>
-                        <button class="btn btn-apply">Apply</button>
-                    </div>
-                </div>
-                
-                <!-- Job Card 4 -->
-                <div class="job-card">
-                    <div class="company-logo">
-                        <img src="https://via.placeholder.com/50" alt="Company Logo">
-                    </div>
-                    <div class="job-details">
-                        <h3>Marketing Manager</h3>
-                        <p class="company-name">Brand Vision</p>
-                        <div class="job-meta">
-                            <span><i class="fas fa-map-marker-alt"></i> Mogadisho, Somalia</span>
-                            <span><i class="fas fa-clock"></i> Full-time</span>
-                            <span><i class="fas fa-money-bill-wave"></i> $350,000 - $500,000</span>
-                        </div>
-                    </div>
-                    <div class="job-actions">
-                        <span class="time-posted">5 days ago</span>
-                        <button class="btn btn-apply">Apply</button>
-                    </div>
-                </div>
-            </div>
+    <section class="featured-jobs" id="featured-jobs-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Featured Jobs</h2>
+      <a href="#" class="view-all" id="view-all-jobs">View all jobs <i class="fas fa-arrow-right"></i></a>
+    </div>
+
+    <div class="jobs-grid" id="jobs-grid">
+
+      <!-- Job Card 1 -->
+      <div class="job-card" id="job-1">
+        <div class="company-logo">
+          <img src="https://via.placeholder.com/50" alt="Company Logo">
         </div>
-    </section>
+        <div class="job-details">
+          <h3>Frontend Developer</h3>
+          <p class="company-name">Tech Solutions Inc.</p>
+          <div class="job-meta">
+            <span><i class="fas fa-map-marker-alt"></i> Mogadishu, Somalia</span>
+            <span><i class="fas fa-clock"></i> Full-time</span>
+            <span><i class="fas fa-money-bill-wave"></i> $250,000 - $400,000</span>
+          </div>
+        </div>
+        <div class="job-actions">
+          <span class="time-posted">2 days ago</span>
+          <button 
+            class="btn btn-apply" 
+            id="apply-job-1"
+            data-job-id="1"
+            data-job-title="Frontend Developer"
+            data-company="Tech Solutions Inc.">
+            Apply
+          </button>
+        </div>
+      </div>
+
+      <!-- Job Card 2 -->
+      <div class="job-card" id="job-2">
+        <div class="company-logo">
+          <img src="https://via.placeholder.com/50" alt="Company Logo">
+        </div>
+        <div class="job-details">
+          <h3>Accountant</h3>
+          <p class="company-name">Finance Partners Ltd</p>
+          <div class="job-meta">
+            <span><i class="fas fa-map-marker-alt"></i> Mogadishu, Somalia</span>
+            <span><i class="fas fa-clock"></i> Full-time</span>
+            <span><i class="fas fa-money-bill-wave"></i> $180,000 - $300,000</span>
+          </div>
+        </div>
+        <div class="job-actions">
+          <span class="time-posted">1 week ago</span>
+          <button 
+            class="btn btn-apply" 
+            id="apply-job-2"
+            data-job-id="2"
+            data-job-title="Accountant"
+            data-company="Finance Partners Ltd">
+            Apply
+          </button>
+        </div>
+      </div>
+
+      <!-- Job Card 3 -->
+      <div class="job-card" id="job-3">
+        <div class="company-logo">
+          <img src="https://via.placeholder.com/50" alt="Company Logo">
+        </div>
+        <div class="job-details">
+          <h3>Customer Service Representative</h3>
+          <p class="company-name">Service Solutions</p>
+          <div class="job-meta">
+            <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+            <span><i class="fas fa-clock"></i> Part-time</span>
+            <span><i class="fas fa-money-bill-wave"></i> $120,000 - $200,000</span>
+          </div>
+        </div>
+        <div class="job-actions">
+          <span class="time-posted">3 days ago</span>
+          <button 
+            class="btn btn-apply" 
+            id="apply-job-3"
+            data-job-id="3"
+            data-job-title="Customer Service Representative"
+            data-company="Service Solutions">
+            Apply
+          </button>
+        </div>
+      </div>
+
+      <!-- Job Card 4 -->
+      <div class="job-card" id="job-4">
+        <div class="company-logo">
+          <img src="https://via.placeholder.com/50" alt="Company Logo">
+        </div>
+        <div class="job-details">
+          <h3>Marketing Manager</h3>
+          <p class="company-name">Brand Vision</p>
+          <div class="job-meta">
+            <span><i class="fas fa-map-marker-alt"></i> Mogadishu, Somalia</span>
+            <span><i class="fas fa-clock"></i> Full-time</span>
+            <span><i class="fas fa-money-bill-wave"></i> $350,000 - $500,000</span>
+          </div>
+        </div>
+        <div class="job-actions">
+          <span class="time-posted">5 days ago</span>
+          <button 
+            class="btn btn-apply" 
+            id="apply-job-4"
+            data-job-id="4"
+            data-job-title="Marketing Manager"
+            data-company="Brand Vision">
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
     <!-- Call to Action Section -->
     <section class="cta-section">
         <div class="container">
@@ -811,3 +841,4 @@
 </body>
 
 </html>
+
