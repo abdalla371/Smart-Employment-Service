@@ -1,6 +1,6 @@
 // integration.js Final
 // API base - UPDATE if your Render URL changes
-const API_BASE = "https://smart-employment-service-7.onrender.com";
+const API_BASE = "https://smart-employment-service-9.onrender.com";
 
 // --- Helpers ---
 function getToken() {
@@ -176,3 +176,4 @@ window.logout = function() {
   showMsg("Logged out");
   window.location.href = "/";
 };
+
