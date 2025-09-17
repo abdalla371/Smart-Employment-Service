@@ -22,7 +22,7 @@ async function apiFetch(path, opts = {}) {
   opts.headers["Content-Type"] = "application/json";
   const token = getToken();
   if (token) opts.headers["Authorization"] ={token};
-  const res = await fetch(${API_BASE}${path}, opts);
+  const res = await fetch({API_BASE}{path}, opts);
   const json = await res.json().catch(() => ({}));
   return { ok: res.ok, status: res.status, data: json };
 }
@@ -176,6 +176,7 @@ window.logout = function() {
   showMsg("Logged out");
   window.location.href = "/";
 };
+
 
 
 
