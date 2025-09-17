@@ -1,4 +1,3 @@
-# backend/app.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -7,7 +6,7 @@ import json
 import os
 from datetime import datetime
 
-app = Flask(_name_)
+app = Flask(__name__)
 CORS(app)
 
 DATA_FILE = "database.json"
@@ -58,7 +57,13 @@ def health():
 @app.route("/api/create-account", methods=["POST"])
 def create_account():
     data = request.get_json() or {}
-    name = data.get("name") or data.get("username") or ""
+    name = (
+        data.get("fullname")
+        or data.get("company")
+        or data.get("name")
+        or data.get("username")
+        or ""
+    )
     email = (data.get("email") or "").strip().lower()
     password = data.get("password") or ""
     utype = data.get("type") or "individual"
@@ -77,7 +82,7 @@ def create_account():
         "email": email,
         "password_hash": generate_password_hash(password),
         "type": utype,
-        "created_at": datetime.utcnow().isoformat()
+        "created_at": datetime.utcnow().isoformat(),
     }
     db["users"].append(user)
     save_db(db)
@@ -112,16 +117,12 @@ def post_job():
         return jsonify({"error": "Authentication required"}), 401
 
     data = request.get_json() or {}
-    title = data.get("title", "")
-    description = data.get("description", "")
-    company = data.get("company", "")
-    location = data.get("location", "")
     job = {
         "id": next_id(db["jobs"]),
-        "title": title,
-        "description": description,
-        "company": company,
-        "location": location,
+        "title": data.get("title", ""),
+        "description": data.get("description", ""),
+        "company": data.get("company", ""),
+        "location": data.get("location", ""),
         "salary_min": data.get("salary_min"),
         "salary_max": data.get("salary_max"),
         "currency": data.get("currency"),
@@ -130,7 +131,7 @@ def post_job():
         "deadline": data.get("deadline"),
         "application_email": data.get("application_email"),
         "posted_by": user_id,
-        "created_at": datetime.utcnow().isoformat()
+        "created_at": datetime.utcnow().isoformat(),
     }
     db["jobs"].append(job)
     save_db(db)
@@ -154,7 +155,10 @@ def apply_job():
         return jsonify({"error": "job_id required"}), 400
 
     # check job exists
-    job = next((j for j in db["jobs"] if str(j["id"]) == str(job_id) or j["id"] == job_id), None)
+    job = next(
+        (j for j in db["jobs"] if str(j["id"]) == str(job_id) or j["id"] == job_id),
+        None,
+    )
     if not job:
         return jsonify({"error": "Job not found"}), 404
 
@@ -162,11 +166,12 @@ def apply_job():
         "id": next_id(db["applications"]),
         "user_id": user_id,
         "job_id": job["id"],
-        "created_at": datetime.utcnow().isoformat()
+        "created_at": datetime.utcnow().isoformat(),
     }
     db["applications"].append(application)
     save_db(db)
-    return jsonify({"message": "Application submitted", "application_id": application["id"]}), 201
+    return jsonify(
+        {"message": "Application submitted", "application_id": application["id"]}), 201
 
 # Internship submission (requires auth)
 @app.route("/api/internship", methods=["POST"])
@@ -180,7 +185,7 @@ def internship():
         "id": next_id(db["internships"]),
         "user_id": user_id,
         "payload": payload,
-        "created_at": datetime.utcnow().isoformat()
+        "created_at": datetime.utcnow().isoformat(),
     }
     db["internships"].append(item)
     save_db(db)
@@ -198,16 +203,15 @@ def jobseeker():
         "id": next_id(db["jobseekers"]),
         "user_id": user_id,
         "payload": payload,
-        "created_at": datetime.utcnow().isoformat()
+        "created_at": datetime.utcnow().isoformat(),
     }
     db["jobseekers"].append(item)
     save_db(db)
     return jsonify({"message": "Jobseeker application received", "id": item["id"]}), 201
 
-# Helpful admin endpoints to view data (optional, can be removed later)
+# Helpful admin endpoints to view data
 @app.route("/api/admin/jobs", methods=["GET"])
 def admin_jobs():
-    # NO auth required here for simplicity; in production secure this endpoint
     return jsonify(db.get("jobs", []))
 
 @app.route("/api/admin/applications", methods=["GET"])
@@ -218,7 +222,6 @@ def admin_applications():
 def admin_users():
     return jsonify(db.get("users", []))
 
-if _name_ == "_main_":
-    # reload db (safe)
+if __name__ == "__main__":
     db = load_db()
     app.run(host="0.0.0.0", port=5000, debug=True)
