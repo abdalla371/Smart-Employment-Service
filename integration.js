@@ -1,6 +1,6 @@
 // integration.js Final
 // API base - UPDATE if your Render URL changes
-const API_BASE = "https://smart-employment-service-9.onrender.com";
+const API_BASE = "https://smart-employment-service-9.onrender.com/api";
 
 // --- Helpers ---
 function getToken() {
@@ -21,7 +21,7 @@ async function apiFetch(path, opts = {}) {
   opts.headers = opts.headers || {};
   opts.headers["Content-Type"] = "application/json";
   const token = getToken();
-  if (token) opts.headers["Authorization"] = Bearer ${token};
+  if (token) opts.headers["Authorization"] = Bearer document.queryselector{token};
   const res = await fetch(${API_BASE}${path}, opts);
   const json = await res.json().catch(() => ({}));
   return { ok: res.ok, status: res.status, data: json };
@@ -176,4 +176,5 @@ window.logout = function() {
   showMsg("Logged out");
   window.location.href = "/";
 };
+
 
