@@ -25,9 +25,9 @@ async function apiFetch(path, opts = {}) {
     opts.headers["Content-Type"] = "application/json";
 
     const token = getToken();
-    if (token) opts.headers["Authorization"] = `Bearer ${token}`;
+    if (token) opts.headers["Authorization"] = Bearer ${token};
 
-    const res = await fetch(`${API_BASE}${path}`, opts);
+    const res = await fetch(${API_BASE}${path}, opts);
     const json = await res.json().catch(() => ({}));
     return { ok: res.ok, status: res.status, data: json };
 }
@@ -41,6 +41,60 @@ function requireLoginRedirect() {
     showMsg("You must be logged in to continue. Redirecting to Login.");
     window.location.href = "/login.html";
 }
+
+// ✅ QAYBTA DHIMAN
+// --- Integration object ---
+const Integration = {
+    submitIndividual: async function (data) {
+        const payload = {
+            type: "individual",
+            fullname: data.fullname,
+            email: data.email,
+            phone: data.phone,
+            profession: data.profession,
+            password: data.password,
+            confirmpassword: data.confirmpassword
+        };
+
+        const r = await apiFetch("/create-account", {
+            method: "POST",
+            body: JSON.stringify(payload)
+        });
+
+        if (r.ok) {
+            showMsg(r.data.message || "Registered successfully. Please log in.");
+            window.location.href = "/login.html";
+        } else {
+            showMsg(r.data.error || "Registration failed.");
+        }
+    },
+
+    submitCompany: async function (data) {
+        const payload = {
+            type: "company",
+            company: data.company,
+            contact: data.contact,
+            email: data.email,
+            phone: data.phone,
+            website: data.website,
+            industry: data.industry,
+            size: data.size,
+            password: data.password
+        };
+
+        const r = await apiFetch("/create-account", {
+            method: "POST",
+            body: JSON.stringify(payload)
+        });
+
+        if (r.ok) {
+            showMsg(r.data.message || "Company registered successfully. Please log in.");
+            window.location.href = "/login.html";
+        } else {
+            showMsg(r.data.error || "Registration failed.");
+        }
+    }
+};
 
 // --- Individual Signup (create-account.html) ---
 const individualForm = document.getElementById("individualForm");
@@ -205,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (r.ok) {
-                showMsg(r.data.message || `Applied to ${jobTitle} at ${company}`);
+                showMsg(r.data.message || Applied to ${jobTitle} at ${company});
             } else {
                 showMsg(r.data.error || "Failed to apply.");
             }
