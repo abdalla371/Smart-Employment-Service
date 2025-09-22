@@ -1,6 +1,5 @@
 const API_BASE = "https://smart-employment-service-9.onrender.com/api";
 
-
 // --- Helpers ---
 function getToken() {
     return localStorage.getItem("ses_token");
@@ -42,7 +41,6 @@ function requireLoginRedirect() {
     window.location.href = "/login.html";
 }
 
-// ✅ QAYBTA DHIMAN
 // --- Integration object ---
 const Integration = {
     submitIndividual: async function (data) {
@@ -96,7 +94,7 @@ const Integration = {
     }
 };
 
-// --- Individual Signup (create-account.html) ---
+// --- Individual Signup ---
 const individualForm = document.getElementById("individualForm");
 if (individualForm) {
     individualForm.addEventListener("submit", async (e) => {
@@ -122,7 +120,7 @@ if (individualForm) {
     });
 }
 
-// --- Company Signup (create-account.html) ---
+// --- Company Signup ---
 const companyForm = document.getElementById("companyForm");
 if (companyForm) {
     companyForm.addEventListener("submit", async (e) => {
@@ -151,7 +149,7 @@ if (companyForm) {
     });
 }
 
-// --- Login (login.html) ---
+// --- Login ---
 const loginContainer = document.querySelector(".login-container form");
 if (loginContainer) {
     loginContainer.addEventListener("submit", async (e) => {
