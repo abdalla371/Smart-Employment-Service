@@ -24,9 +24,9 @@ async function apiFetch(path, opts = {}) {
     opts.headers["Content-Type"] = "application/json";
 
     const token = getToken();
-    if (token) opts.headers["Authorization"] = Bearer ${token};
+    if (token) opts.headers["Authorization"] = "Bearer " + token;
 
-    const res = await fetch(${API_BASE}${path}, opts);
+    const res = await fetch(API_BASE + path, opts);
     const json = await res.json().catch(() => ({}));
     return { ok: res.ok, status: res.status, data: json };
 }
@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (r.ok) {
-                showMsg(r.data.message || Applied to ${jobTitle} at ${company});
+                showMsg(r.data.message || ("Applied to " + jobTitle + " at " + company));
             } else {
                 showMsg(r.data.error || "Failed to apply.");
             }
