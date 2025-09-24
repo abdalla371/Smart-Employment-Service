@@ -32,17 +32,45 @@ async function apiFetch(path, opts = {}) {
 }
 
 // --- UI helpers ---
+// --- UI helpers ---
 function showMsg(msg) {
-    // Halkan waxaan override gareynaa si repo-name aanu u muuqan
-    if (msg && msg.toLowerCase().includes("smart-employment-service")) {
-        msg = "Account created successfully. Please log in.";
-    }
-    alert(msg);
-}
+    // Haddii modal hore u jiro, update garee
+    let modal = document.getElementById("customModal");
+    if (!modal) {
+        modal = document.createElement("div");
+        modal.id = "customModal";
+        modal.style.position = "fixed";
+        modal.style.top = "0";
+        modal.style.left = "0";
+        modal.style.width = "100%";
+        modal.style.height = "100%";
+        modal.style.background = "rgba(0,0,0,0.6)";
+        modal.style.display = "flex";
+        modal.style.alignItems = "center";
+        modal.style.justifyContent = "center";
+        modal.style.zIndex = "9999";
+        modal.innerHTML = `
+            <div style="background:white;padding:20px;border-radius:8px;
+                        max-width:350px;text-align:center;box-shadow:0 0 10px #000;">
+                <h3 style="margin-top:0;color:#007bff;">Smart Employment Services</h3>
+                <p id="customMsgText" style="margin:15px 0;"></p>
+                <button id="customCloseBtn" style="padding:8px 15px;border:none;
+                        border-radius:5px;background:#007bff;color:white;cursor:pointer;">
+                    OK
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
 
-function requireLoginRedirect() {
-    showMsg("You must be logged in to continue. Redirecting to Login.");
-    window.location.href = "login.html"; // FIXED
+        // Close button
+        document.getElementById("customCloseBtn").addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+    }
+
+    // Update message text & show modal
+    document.getElementById("customMsgText").textContent = msg;
+    modal.style.display = "flex";
 }
 
 // --- Integration object ---
@@ -275,3 +303,4 @@ window.logout = function () {
     showMsg("Logged out");
     window.location.href = "index.html"; // FIXED
 };
+
