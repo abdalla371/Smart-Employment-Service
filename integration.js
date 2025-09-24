@@ -33,12 +33,16 @@ async function apiFetch(path, opts = {}) {
 
 // --- UI helpers ---
 function showMsg(msg) {
+    // Halkan waxaan override gareynaa si repo-name aanu u muuqan
+    if (msg && msg.toLowerCase().includes("smart-employment-service")) {
+        msg = "Account created successfully. Please log in.";
+    }
     alert(msg);
 }
 
 function requireLoginRedirect() {
     showMsg("You must be logged in to continue. Redirecting to Login.");
-    window.location.href = "/login.html";
+    window.location.href = "login.html"; // FIXED
 }
 
 // --- Integration object ---
@@ -60,8 +64,8 @@ const Integration = {
         });
 
         if (r.ok) {
-            showMsg(r.data.message || "Registered successfully. Please log in.");
-            window.location.href = "/login.html";
+            showMsg("Registered successfully. Please log in.");
+            window.location.href = "login.html"; // FIXED
         } else {
             showMsg(r.data.error || "Registration failed.");
         }
@@ -86,8 +90,8 @@ const Integration = {
         });
 
         if (r.ok) {
-            showMsg(r.data.message || "Company registered successfully. Please log in.");
-            window.location.href = "/login.html";
+            showMsg("Company registered successfully. Please log in.");
+            window.location.href = "login.html"; // FIXED
         } else {
             showMsg(r.data.error || "Registration failed.");
         }
@@ -112,8 +116,8 @@ if (individualForm) {
             body: JSON.stringify(payload)
         });
         if (r.ok) {
-            showMsg(r.data.message || "Registered successfully. Please log in.");
-            window.location.href = "/login.html";
+            showMsg("Registered successfully. Please log in.");
+            window.location.href = "login.html"; // FIXED
         } else {
             showMsg(r.data.error || "Registration failed.");
         }
@@ -141,8 +145,8 @@ if (companyForm) {
             body: JSON.stringify(payload)
         });
         if (r.ok) {
-            showMsg(r.data.message || "Company registered successfully. Please log in.");
-            window.location.href = "/login.html";
+            showMsg("Company registered successfully. Please log in.");
+            window.location.href = "login.html"; // FIXED
         } else {
             showMsg(r.data.error || "Registration failed.");
         }
@@ -165,7 +169,7 @@ if (loginContainer) {
         if (r.ok && r.data.token) {
             setSession(r.data.user_id, r.data.token);
             showMsg("Login successful!");
-            window.location.href = "/";
+            window.location.href = "index.html"; // FIXED
         } else {
             showMsg(r.data.error || "Login failed.");
         }
@@ -187,7 +191,7 @@ if (postJobForm) {
         });
 
         if (r.ok) {
-            showMsg(r.data.message || "Job posted.");
+            showMsg("Job posted.");
             postJobForm.reset();
         } else {
             showMsg(r.data.error || "Failed to post job.");
@@ -210,7 +214,7 @@ if (internshipForm) {
         });
 
         if (r.ok) {
-            showMsg(r.data.message || "Internship submitted.");
+            showMsg("Internship submitted.");
             internshipForm.reset();
         } else {
             showMsg(r.data.error || "Failed to submit internship.");
@@ -233,7 +237,7 @@ if (jobseekingForm) {
         });
 
         if (r.ok) {
-            showMsg(r.data.message || "Application submitted.");
+            showMsg("Application submitted.");
             jobseekingForm.reset();
         } else {
             showMsg(r.data.error || "Failed to submit application.");
@@ -257,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (r.ok) {
-                showMsg(r.data.message || ("Applied to " + jobTitle + " at " + company));
+                showMsg("Applied successfully.");
             } else {
                 showMsg(r.data.error || "Failed to apply.");
             }
@@ -269,5 +273,5 @@ document.addEventListener("DOMContentLoaded", () => {
 window.logout = function () {
     clearSession();
     showMsg("Logged out");
-    window.location.href = "/";
+    window.location.href = "index.html"; // FIXED
 };
