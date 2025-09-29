@@ -6,7 +6,7 @@ import os
 import uuid
 from datetime import datetime
 
-app = Flask(_name_)
+app = Flask(__name__)
 CORS(app)
 
 # ---------------------------
