@@ -1,45 +1,58 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import uuid
+from datetime import datetime
 
 app = Flask(_name_)
 CORS(app)
 
-# ===== Database Config =====
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")  # Render will inject this
+# ---------------------------
+# Database Config
+# ---------------------------
+database_url = os.environ.get("DATABASE_URL")
+
+# Render DB mararka qaar wuxuu bixiyaa postgres:// laakiin SQLAlchemy waxay rabtaa postgresql://
+if database_url and database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
 db = SQLAlchemy(app)
 
-# ====== Models ======
+# ---------------------------
+# Database Models
+# ---------------------------
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200))
+    name = db.Column(db.String(150))
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
     type = db.Column(db.String(50), default="individual")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Token(db.Model):
-    token = db.Column(db.String(200), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String(200), unique=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
 class Job(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200))
     description = db.Column(db.Text)
-    company = db.Column(db.String(200))
-    location = db.Column(db.String(200))
+    company = db.Column(db.String(150))
+    location = db.Column(db.String(150))
     salary_min = db.Column(db.Integer)
     salary_max = db.Column(db.Integer)
     currency = db.Column(db.String(10))
-    job_type = db.Column(db.String(100))
+    job_type = db.Column(db.String(50))
     category = db.Column(db.String(100))
-    deadline = db.Column(db.String(100))
-    application_email = db.Column(db.String(200))
+    deadline = db.Column(db.String(50))
+    application_email = db.Column(db.String(120))
     posted_by = db.Column(db.Integer, db.ForeignKey("user.id"))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -55,24 +68,29 @@ class Internship(db.Model):
     payload = db.Column(db.JSON)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-class Jobseeker(db.Model):
+class JobSeeker(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     payload = db.Column(db.JSON)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
-# ===== Helper =====
+# ---------------------------
+# Helper Functions
+# ---------------------------
+
 def require_auth():
     auth = request.headers.get("Authorization", "")
     if not auth.startswith("Bearer "):
         return None
-    token_str = auth.split(" ", 1)[1]
-    token_obj = Token.query.filter_by(token=token_str).first()
-    return token_obj.user_id if token_obj else None
+    token = auth.split(" ", 1)[1]
+    t = Token.query.filter_by(token=token).first()
+    return t.user_id if t else None
 
 
-# ===== Routes =====
+# ---------------------------
+# Routes
+# ---------------------------
 
 @app.route("/api/health")
 def health():
@@ -118,6 +136,8 @@ def login():
     data = request.get_json() or {}
     email = (data.get("email") or "").strip().lower()
     password = data.get("password") or ""
+    if not email or not password:
+        return jsonify({"error": "Email and password required"}), 400
 
     user = User.query.filter_by(email=email).first()
     if not user or not check_password_hash(user.password_hash, password):
@@ -178,7 +198,8 @@ def list_jobs():
             "application_email": j.application_email,
             "posted_by": j.posted_by,
             "created_at": j.created_at.isoformat(),
-        } for j in jobs
+        }
+        for j in jobs
     ])
 
 
@@ -223,7 +244,7 @@ def jobseeker():
         return jsonify({"error": "Authentication required"}), 401
 
     payload = request.get_json() or {}
-    item = Jobseeker(user_id=user_id, payload=payload)
+    item = JobSeeker(user_id=user_id, payload=payload)
     db.session.add(item)
     db.session.commit()
     return jsonify({"message": "Jobseeker application received", "id": item.id}), 201
@@ -238,17 +259,18 @@ def admin_jobs():
 @app.route("/api/admin/applications", methods=["GET"])
 def admin_applications():
     apps = Application.query.all()
-    return jsonify([{"id": a.id, "user_id": a.user_id, "job_id": a.job_id} for a in apps])
+    return jsonify([{"id": a.id, "job_id": a.job_id, "user_id": a.user_id} for a in apps])
 
 @app.route("/api/admin/users", methods=["GET"])
 def admin_users():
     users = User.query.all()
-    return jsonify([{"id": u.id, "email": u.email, "type": u.type} for u in users])
+    return jsonify([{"id": u.id, "email": u.email, "name": u.name} for u in users])
 
 
-# ====== Run ======
+# ---------------------------
+# Run App
+# ---------------------------
 if _name_ == "_main_":
     with app.app_context():
-        db.create_all()   # auto-create tables if not exist
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
+        db.create_all()
+    app.run(host="0.0.0.0", port=5000, debug=True)
