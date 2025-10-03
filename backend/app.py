@@ -6,6 +6,9 @@ import os
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
+# --------------------
+# Flask App
+# --------------------
 app = Flask(_name_)
 CORS(app)
 
