@@ -227,7 +227,9 @@ def admin_applications():
 # --------------------
 # Init
 # --------------------
+# ✅ Banaanka if __main__ si Gunicorn uu u abuuro tables
+with app.app_context():
+    db_sql.create_all()
+
 if __name__ == "__main__":
-    with app.app_context():
-        db_sql.create_all()  # make sure tables are created
     app.run(host="0.0.0.0", port=5000, debug=True)
