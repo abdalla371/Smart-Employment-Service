@@ -16,6 +16,10 @@ CORS(app)
 # Database Config
 # --------------------
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///local.db")  # fallback local
+# Render DB mararka qaar wuxuu bixiyaa postgres:// → bedel postgresql://
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db_sql = SQLAlchemy(app)
@@ -54,6 +58,20 @@ class Application(db_sql.Model):
     id = db_sql.Column(db_sql.Integer, primary_key=True)
     user_id = db_sql.Column(db_sql.Integer)
     job_id = db_sql.Column(db_sql.Integer)
+    created_at = db_sql.Column(db_sql.DateTime, default=datetime.utcnow)
+
+
+class Internship(db_sql.Model):
+    id = db_sql.Column(db_sql.Integer, primary_key=True)
+    user_id = db_sql.Column(db_sql.Integer)
+    payload = db_sql.Column(db_sql.JSON)
+    created_at = db_sql.Column(db_sql.DateTime, default=datetime.utcnow)
+
+
+class JobSeeker(db_sql.Model):
+    id = db_sql.Column(db_sql.Integer, primary_key=True)
+    user_id = db_sql.Column(db_sql.Integer)
+    payload = db_sql.Column(db_sql.JSON)
     created_at = db_sql.Column(db_sql.DateTime, default=datetime.utcnow)
 
 
@@ -205,6 +223,34 @@ def apply_job():
     return jsonify({"message": "Application submitted", "application_id": application.id}), 201
 
 
+# Internship (requires auth)
+@app.route("/api/internship", methods=["POST"])
+def internship():
+    user_id = require_auth()
+    if not user_id:
+        return jsonify({"error": "Authentication required"}), 401
+
+    payload = request.get_json() or {}
+    item = Internship(user_id=user_id, payload=payload)
+    db_sql.session.add(item)
+    db_sql.session.commit()
+    return jsonify({"message": "Internship application received", "id": item.id}), 201
+
+
+# JobSeeker (requires auth)
+@app.route("/api/jobseeker", methods=["POST"])
+def jobseeker():
+    user_id = require_auth()
+    if not user_id:
+        return jsonify({"error": "Authentication required"}), 401
+
+    payload = request.get_json() or {}
+    item = JobSeeker(user_id=user_id, payload=payload)
+    db_sql.session.add(item)
+    db_sql.session.commit()
+    return jsonify({"message": "Jobseeker application received", "id": item.id}), 201
+
+
 # Admin Endpoints
 @app.route("/api/admin/users", methods=["GET"])
 def admin_users():
@@ -227,7 +273,6 @@ def admin_applications():
 # --------------------
 # Init
 # --------------------
-# ✅ Banaanka if __main__ si Gunicorn uu u abuuro tables
 with app.app_context():
     db_sql.create_all()
 
