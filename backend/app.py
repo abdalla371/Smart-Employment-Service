@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 # --------------------
 # Flask App
 # --------------------
-app = Flask(_name_)
+app = Flask(__name__)
 CORS(app)
 
 # --------------------
@@ -227,7 +227,7 @@ def admin_applications():
 # --------------------
 # Init
 # --------------------
-if _name_ == "_main_":
+if __name__ == "__main__":
     with app.app_context():
         db_sql.create_all()  # make sure tables are created
     app.run(host="0.0.0.0", port=5000, debug=True)
