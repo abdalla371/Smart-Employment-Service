@@ -92,6 +92,10 @@ def require_auth():
 # API Endpoints
 # --------------------
 
+@app.route("/")
+def home():
+    return "Backend is running ✅"
+
 @app.route("/api/health")
 def health():
     return jsonify({"status": "ok", "time": datetime.utcnow().isoformat()})
@@ -278,5 +282,6 @@ with app.app_context():
 
 if __name__ == "__main__":
     with app.app_context():
-    db_sql.create_all()
+        db_sql.create_all()
     app.run(host="0.0.0.0", port=5000, debug=True)
+
